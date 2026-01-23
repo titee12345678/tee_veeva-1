@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>จากใจตี๋ถึงวีวา</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Sriracha&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sriracha&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="premium.css">
     <link rel="stylesheet" href="enhanced.css">
     <style>
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(45deg, #FFC1CC, #F8E1E9);
+            background: linear-gradient(135deg, #fff0f3 0%, #ffb3c1 50%, #ff95a8 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -18,6 +19,13 @@
             font-family: 'Sriracha', cursive;
             overflow: hidden;
             position: relative;
+            animation: gradientShift 15s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
         
         
@@ -122,19 +130,21 @@
             max-width: 580px;
             text-align: center;
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+            transform: translateY(30px) scale(0.95);
+            transition: opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 10;
             font-size: clamp(1.5rem, 4vw, 2.5rem);
             color: #FF4778;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.8),
                          0 0 30px #FF9999,
                          2px 2px 5px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            border-radius: 20px;
-            background-color: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 10px 30px rgba(255, 71, 120, 0.2);
+            padding: 30px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15));
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(255, 71, 120, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -149,11 +159,11 @@
         .slide img {
             max-width: 100%;
             max-height: 40vh;
-            border-radius: 15px;
+            border-radius: 20px;
             margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 5px solid white;
-            transition: transform 0.5s ease;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25), 0 0 30px rgba(255, 71, 120, 0.2);
+            border: 6px solid white;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease;
             object-fit: cover;
         }
 
@@ -164,20 +174,20 @@
        
         .love-button {
             font-family: 'Prompt', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             position: relative;
             font-size: clamp(1.2rem, 3vw, 1.5rem);
-            padding: 15px 40px;
+            padding: 16px 48px;
             border: none;
             border-radius: 50px;
-            background: linear-gradient(45deg, #FF4778, #FF95A8);
+            background: linear-gradient(135deg, #FF4778, #FF95A8);
             color: white;
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 71, 120, 0.4),
-                        0 0 15px rgba(255, 71, 120, 0.5),
-                        0 0 30px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(255, 71, 120, 0.4),
+                        0 0 20px rgba(255, 71, 120, 0.6),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 50;
             opacity: 0;
             transform: translateY(50px);
@@ -188,10 +198,10 @@
         }
 
         .love-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(255, 71, 120, 0.5),
-                        0 0 20px rgba(255, 71, 120, 0.6),
-                        0 0 40px rgba(255, 255, 255, 0.4);
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 25px 50px rgba(255, 71, 120, 0.5),
+                        0 0 30px rgba(255, 71, 120, 0.7),
+                        0 0 60px rgba(255, 255, 255, 0.5);
         }
 
         .love-button:active {
@@ -812,6 +822,9 @@
         <div class="response-buttons">
             <button class="response-button yes-button" id="yesButton">ไปต่อ ♥</button>
             <button class="response-button no-button" id="noButton" style="font-weight: bold; color: white;">ขอคิดดูก่อน</button>
+        </div>
+        <div style="margin-top: 30px;">
+            <a href="slides.html" class="btn-premium" style="font-size: 1.1rem; padding: 12px 30px; text-decoration: none;">✨ ดูสไลด์ความทรงจำสุดพิเศษ ✨</a>
         </div>
     </div>
 

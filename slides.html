@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Journey - Tee & Veeva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sriracha&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="premium.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+        .slide-container {
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            scrollbar-width: none;
+        }
+        .slide-container::-webkit-scrollbar {
+            display: none;
+        }
+        .full-slide {
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-content {
+            z-index: 10;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 80%;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .full-slide.active .slide-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .slide-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 10s linear;
+            z-index: 1;
+        }
+        .full-slide.active .slide-bg {
+            transform: scale(1.1);
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+            z-index: 2;
+        }
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            font-family: 'Sriracha', cursive;
+        }
+        p {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-family: 'Prompt', sans-serif;
+        }
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .dot.active {
+            background: #ff4d6d;
+            transform: scale(1.5);
+            box-shadow: 0 0 15px #ff4d6d;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-dots" id="navDots"></div>
+    <div class="slide-container" id="slideContainer">
+        <section class="full-slide active">
+            <div class="slide-bg" style="background-image: url('images/S__4243477_0.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="slide-content">
+                <h1>จุดเริ่มต้นของเรา</h1>
+                <p>ทุกอย่างเริ่มต้นจากวันที่เราได้รู้จักกัน...</p>
+            </div>
+        </section>
+        <section class="full-slide">
+            <div class="slide-bg" style="background-image: url('images/S__4243479_0.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="slide-content">
+                <h1>ความทรงจำที่แสนพิเศษ</h1>
+                <p>ทุกรอยยิ้ม ทุกเสียงหัวเราะ มีค่าเสมอ</p>
+            </div>
+        </section>
+        <section class="full-slide">
+            <div class="slide-bg" style="background-image: url('images/S__4243480_0.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="slide-content">
+                <h1>การเดินทางของเรา</h1>
+                <p>ไม่ว่าจะไปที่ไหน แค่มีเธออยู่ข้างๆ ก็พอ</p>
+            </div>
+        </section>
+        <section class="full-slide">
+            <div class="slide-bg" style="background-image: url('images/S__4243481_0.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="slide-content">
+                <h1>คำสัญญาจากใจ</h1>
+                <p>ตี๋จะดูแลวีวาให้ดีที่สุดตลอดไปนะ</p>
+            </div>
+        </section>
+        <section class="full-slide">
+            <div class="slide-bg" style="background-image: url('images/cup3.jpg');"></div>
+            <div class="overlay"></div>
+            <div class="slide-content">
+                <h1>รักวีวาที่สุดเลย ♥</h1>
+                <p>ขอบคุณที่เข้ามาเป็นส่วนหนึ่งในชีวิตของตี๋นะ</p>
+                <br>
+                <a href="congratulations.html" class="btn-premium">กลับหน้าหลัก</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const container = document.getElementById('slideContainer');
+        const slides = document.querySelectorAll('.full-slide');
+        const navDots = document.getElementById('navDots');
+
+        // Create dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                container.scrollTo({
+                    top: i * window.innerHeight,
+                    behavior: 'smooth'
+                });
+            });
+            navDots.appendChild(dot);
+        });
+
+        // Intersection Observer for active state
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    slides.forEach(s => s.classList.remove('active'));
+                    entry.target.classList.add('active');
+                    
+                    const index = Array.from(slides).indexOf(entry.target);
+                    document.querySelectorAll('.dot').forEach((d, i) => {
+                        d.classList.toggle('active', i === index);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        slides.forEach(slide => observer.observe(slide));
+    </script>
+</body>
+</html>
