@@ -6,7 +6,7 @@ The river portrait is the first image and the first album photograph. All twelve
 
 Checked behavior:
 
-- The mobile menu opens, closes after selecting a chapter, and keeps the reader in the same document. Navigation remains fixed and changes to an opaque surface while scrolling.
+- The mobile menu opens, closes after selecting a chapter, and keeps the reader in the same document. Navigation remains fixed and changes to an opaque surface while scrolling. At 667×320, keyboard focus reaches the last menu link inside a scrollable menu; resizing to 1024px closes the mobile menu and shows all five desktop chapter links without overflow.
 - Month navigation changes November to December with 31 dates. Date calculations retain the five passing unit tests for recurrence, same-day events, Bangkok midnight, leap years, and non-negative elapsed time.
 - Reduced motion removes hero transforms, reveals the complete letter, and keeps the postcard paused. Switching motion preference remains supported.
 - The Remotion postcard starts when visible, has native controls plus pause/replay, and pauses off screen. Its encoded output was inspected: H.264, 1280×720, 30fps, 12 seconds, approximately 2.2 MB. Representative frames from all three chapters were visually inspected.

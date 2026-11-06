@@ -1,7 +1,7 @@
 import { daysTogether, nextOccasion, formatDate } from "./dates.js";
 
 const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
-const mobilePreference = matchMedia("(max-width: 700px)");
+const mobilePreference = matchMedia("(max-width: 900px)");
 const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
 
 // Native scrolling preserves touch momentum, browser history, and keyboard navigation.
