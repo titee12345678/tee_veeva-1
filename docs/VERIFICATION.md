@@ -17,3 +17,8 @@ Checked behavior:
 UI/UX Pro Max was used for design-system and UX searches; project-specific decisions are recorded in `UX-UPDATE.md`. The hosted Remotion MCP is shut down, and this browser session had no Studio WebMCP bridge; the film was generated with the actual local Remotion CLI. No MCP use is claimed.
 
 Review: all content remains in a native vertical flow; user controls and English copy stay visible; no third-party scripts or rendering framework are delivered to viewers; photographs, fonts, and the encoded film are served locally. Original media and legacy supporting files are retained. Publish the root of `main` through GitHub Pages; revert the feature commits to undo the update.
+
+
+## Responsive story-photo regression
+
+A 390px reproduction confirmed the two absolutely positioned story photographs overlapped. At widths up to 900px they now use ordinary grid flow, intrinsic image heights, and no rotation or parallax. Browser geometry checks passed at 320, 375, 390, 480, 600, 768, and 900px: the photographs do not intersect, captions remain inside their frames, and the page has no horizontal overflow. Desktop checks at 1024 and 1440px preserve the intended collage. `npm run check` passed and the browser console was clear.

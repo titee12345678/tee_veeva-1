@@ -70,7 +70,10 @@ function renderScroll() {
   }
   for (const element of parallax) {
     const rect = element.getBoundingClientRect();
-    if (reduced) {
+    if (
+      reduced ||
+      (mobilePreference.matches && element.classList.contains("story-photo"))
+    ) {
       element.style.translate = "";
       continue;
     }

@@ -1035,3 +1035,35 @@ html.motion-ready .journal-photo[data-reveal] {
 .cover .circle-arrow {
   border-color: currentColor;
 }
+
+/* A single-column story needs photographs in flow, not an overlapping collage. */
+@media (max-width: 900px) {
+  .story-photos {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    width: min(620px, 100%);
+    min-height: 0;
+    margin: 36px auto 0;
+  }
+  .story-photos .story-photo {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    transform: none;
+    translate: none !important;
+    will-change: auto;
+  }
+  .story-photos .story-photo img {
+    height: auto;
+    object-fit: contain;
+  }
+  .story-photos .photo-margin-note {
+    position: static;
+    display: block;
+    transform: none;
+    text-align: right;
+    margin-top: 0;
+  }
+}
