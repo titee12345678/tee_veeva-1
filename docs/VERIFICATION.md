@@ -26,3 +26,7 @@ A 390px reproduction confirmed the two absolutely positioned story photographs o
 ## Unique photographs
 
 Removed the duplicate river, mirror, and beginning images from the album while keeping their first appearances in the cover and story. Album captions and dialog labels now use eight positions. The original video no longer repeats an album photograph as its poster. Chromium confirmed eleven unique main-page image sources, eight album entries, no overflow at 390px and 1440px, correct dialog wraparound from 01 / 08 to 08 / 08, and no console errors. JavaScript syntax checks and diff whitespace checks passed.
+
+## Name typography
+
+The hero, letter seal, and closing monogram now share an upright Cormorant ampersand. The hero connector is 58% of the name size, with separate spacing, while the decorative monograms use 62%. Chromium checks at 320, 390, 768, and 1440px found no page overflow or clipped title text; desktop and mobile screenshots were inspected and the console was clear.
