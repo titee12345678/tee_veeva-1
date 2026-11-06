@@ -66,7 +66,7 @@ function renderScroll() {
   if (coverImage && cover) {
     coverImage.style.transform = reduced
       ? ""
-      : `translateY(${Math.min(scrollY, cover.offsetHeight) * 0.19}px) scale(${1.035 + clamp(scrollY / height) * 0.045})`;
+      : `translateY(${Math.round(Math.min(scrollY, cover.offsetHeight) * 0.19)}px)`;
   }
   for (const element of parallax) {
     const rect = element.getBoundingClientRect();

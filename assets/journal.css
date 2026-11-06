@@ -87,15 +87,6 @@ h4 {
 .cover-image img {
   object-position: 50% 58%;
 }
-.cover-shade {
-  background: linear-gradient(
-    180deg,
-    #102c46b3 0%,
-    #102c4659 29%,
-    #102c460a 55%,
-    #102c49c4 100%
-  );
-}
 .cover-content {
   padding-top: 128px;
 }
@@ -659,9 +650,6 @@ html.motion-ready .journal-photo[data-reveal] {
   .cover-image img {
     object-position: 48% 58%;
   }
-  .cover-shade {
-    background: linear-gradient(180deg, #102c46b3, #102c4633 45%, #102c49d9);
-  }
   .cover-kicker {
     font-size: 10px;
     gap: 16px;
@@ -1034,4 +1022,16 @@ html.motion-ready .journal-photo[data-reveal] {
   max-height: calc(100svh - var(--header-height));
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+/* Keep the original photo clear and use dark lettering for contrast. */
+.cover,
+.header--cover {
+  color: var(--ink);
+}
+.cover-note .small-label {
+  opacity: 1;
+}
+.cover .circle-arrow {
+  border-color: currentColor;
 }
