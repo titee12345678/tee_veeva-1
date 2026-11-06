@@ -2,7 +2,7 @@
 
 The journal was checked in Chromium at widths 320, 375, 390, 600, 768, 900, 1024, 1440, and 1920 pixels, plus 844×390 landscape. Each size passed checks for page overflow and visible button targets of at least 44×44 CSS pixels. A narrow-calendar overflow was reproduced at 320px and fixed by allowing grid children to shrink and sizing the seven date columns explicitly.
 
-The river portrait is the first image and the first album photograph. All eleven photos, both films, the entire letter and postscript, milestones, and calendar are in `index.html`. Navigation points to local chapter IDs; former page URLs redirect to those chapters. The six HTML entry points are English and chapter IDs are unique.
+The river portrait appears only as the cover, and the mirror and sunshine portraits appear only in the story. The album contains eight other photographs. All eleven unique still photographs, both films, the entire letter and postscript, milestones, and calendar are in `index.html`. Navigation points to local chapter IDs; former page URLs redirect to those chapters. The six HTML entry points are English and chapter IDs are unique.
 
 Checked behavior:
 
@@ -22,3 +22,7 @@ Review: all content remains in a native vertical flow; user controls and English
 ## Responsive story-photo regression
 
 A 390px reproduction confirmed the two absolutely positioned story photographs overlapped. At widths up to 900px they now use ordinary grid flow, intrinsic image heights, and no rotation or parallax. Browser geometry checks passed at 320, 375, 390, 480, 600, 768, and 900px: the photographs do not intersect, captions remain inside their frames, and the page has no horizontal overflow. Desktop checks at 1024 and 1440px preserve the intended collage. `npm run check` passed and the browser console was clear.
+
+## Unique photographs
+
+Removed the duplicate river, mirror, and beginning images from the album while keeping their first appearances in the cover and story. Album captions and dialog labels now use eight positions. The original video no longer repeats an album photograph as its poster. Chromium confirmed eleven unique main-page image sources, eight album entries, no overflow at 390px and 1440px, correct dialog wraparound from 01 / 08 to 08 / 08, and no console errors. JavaScript syntax checks and diff whitespace checks passed.

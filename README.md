@@ -1,6 +1,6 @@
 # Tee & Veeva
 
-One continuous, English photo journal: a river-side cover, our story, eleven photographs, the complete letter, two films, and a working relationship calendar. Every chapter is on `index.html`; the navigation scrolls within the same page.
+One continuous, English photo journal: a river-side cover, our story, eight additional photographs without repeating the cover or story images, the complete letter, two films, and a working relationship calendar. Every chapter is on `index.html`; the navigation scrolls within the same page.
 
 [Open the website](https://titee12345678.github.io/tee_veeva-1/)
 
