@@ -1,160 +1,18 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>วีวา-ตี๋</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles1.css">
-    <link rel="stylesheet" href="enhanced.css">
-</head>
-<body>
-    <div class="container">
-        <div class="time-counter" data-aos="fade-up">
-            <h2>ตั้งแต่รู้จักวีวา</h2>
-            <div class="time-digits">
-                <div class="time-unit">
-                    <div class="number" id="months">0</div>
-                    <div class="label">เดือน</div>
-                </div>
-                <div class="time-unit">
-                    <div class="number" id="days">0</div>
-                    <div class="label">วัน</div>
-                </div>
-                <div class="time-unit">
-                    <div class="number" id="hours">0</div>
-                    <div class="label">ชั่วโมง</div>
-                </div>
-                <div class="time-unit">
-                    <div class="number" id="minutes">0</div>
-                    <div class="label">นาที</div>
-                </div>
-                <div class="time-unit">
-                    <div class="number" id="seconds">0</div>
-                    <div class="label">วินาที</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="gallery" data-aos="fade-up">
-            <img src="images/25.jpg" alt="ภาพความทรงจำ 1" onclick="showMemory(1)">
-            <img src="images/24.jpg" alt="ภาพความทรงจำ 2" onclick="showMemory(2)">
-            <img src="images/23.jpg" alt="ภาพความทรงจำ 3" onclick="showMemory(3)">
-            <img src="images/memory4.png" alt="ภาพความทรงจำ 4" onclick="showMemory(4)">
-        </div>
-
-        <div class="timeline">
-            <div class="moment-card" data-aos="fade-right">
-                <img src="images/26.jpg" alt="♥">
-            </div>
-
-            <div class="moment-card" data-aos="fade-left">
-                <img src="images/27.jpg" alt="ช่วงเวลาความสุข">
-            </div>
-
-            <div class="moment-card" data-aos="fade-right">
-                <h2>อยากรู้ไหมตี๋รักวีวาแค่ไหน</h2>
-                <button class="heart-explosion-btn" onclick="explodeHearts()">วีวาลองกดปุ่มนี้ดู ♥</button>
-            </div>
-
-            <div class="moment-card" data-aos="fade-left">
-                <h2>ตี๋จะเป็นหัวใจที่ดีเพื่อดูแลหัวใจที่ดีอีกดวงของวีวาเช่นกัน</h2>
-                <div class="heart-box"></div>
-            </div>
-
-            <div class="moment-card" data-aos="fade-right" onclick="solvePuzzle(this)">
-                <h2>คำถาม</h2>
-                <p>อะไรที่หวานที่สุดในโลก? กดคำตอบดูครับ</p>
-                <div class="puzzle-text" style="font-size: 3em; font-weight: 900; background: linear-gradient(135deg, #FF1744, #FF4778, #FF6B9D, #FF95A8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 15px rgba(255, 23, 68, 0.9)) drop-shadow(0 0 30px rgba(255, 71, 120, 0.7)) drop-shadow(0 0 45px rgba(255, 107, 157, 0.5)); animation: textGlowStrong 1.5s ease-in-out infinite, textFloat 3s ease-in-out infinite, textPulse 2s ease-in-out infinite;">ความรักของเราไง ♥</div>
-            </div>
-
-            <div class="moment-card" data-aos="fade-right">
-                <h2>อยากเห็นรุ้งกินน้ำไหม ?</h2>
-                <p></p>
-                <button class="btn" onclick="showRainbow(this.parentElement.querySelector('.rainbow-container'))">กดดูรุ้งกินน้ำ 🌈</button>
-                <div class="rainbow-container">
-                    <div class="rainbow"></div>
-                    <div class="rainbow-text">วีวาทำให้ชีวิตตี๋มีสีสันขึ้นเยอะเลยนะ </div>
-                </div>
-            </div>
-
-            <div class="moment-card" data-aos="fade-left">
-                <h2>ตี๋มีอะไรจะบอก</h2>
-                <p>วีวากดลองเปิดการ์ดดูครับ</p>
-                <div class="gate-container">
-                    <div class="gate" onclick="openGate(this)">
-                        <div class="gate-door left-door"></div>
-                        <div class="gate-door right-door"></div>
-                        <div class="gate-light"></div>
-                        <div class="gate-message">ขอบคุณที่เกิดมาบนโลกใบนี้ ให้ตี๋ได้เจอความรักที่ดีนะ🍀</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="moment-card" data-aos="fade-left">
-                <h2>ดวงดาวของตี๋ 🌟</h2>
-                <div class="starry-sky" id="starrySky" onmousemove="createStar(event, this)" onmouseleave="stopStars(this)">
-                    <div class="starry-message">วีวาเหมือนดวงดาวที่ส่องแสง อยู่เคียงข้างตี๋เสมอแม้ในคืนที่มืดมิด ✨</div>
-                </div>
-            </div>
-
-            <div class="moment-card" data-aos="fade-left">
-                <h2>ลูกโป่งหัวใจของเรา 🎈</h2>
-                
-                <button class="btn" onclick="releaseBalloons()">ปล่อยลูกโป่ง ♥</button>
-            </div>
-
-            <div class="final-question" data-aos="zoom-in">
-                <div class="question-frame">
-                    <h2>เป็นแฟนกันนะ ♥</h2>
-                </div>
-                <div class="love-ring"></div>
-                <div class="sparkles"></div>
-                <div class="love-bubble-container">
-                    <div class="love-bubble"></div>
-                    <div class="love-bubble"></div>
-                    <div class="love-bubble"></div>
-                </div>
-                <div class="floating-hearts"></div>
-                <div class="choice-buttons">
-                    <button class="btn glowing-btn yes-btn" onclick="sayYes()">
-                        <span class="btn-text">ตกลง ♥</span>
-                        <div class="heart-particles"></div>
-                    </button>
-                    <button class="btn escape-btn no-btn" onclick="moveButton(this)" style="background: #999999;">
-                        <span class="btn-text">ไม่ตกลง</span>
-                        <div class="sad-particles"></div>
-                    </button>
-                </div>
-                <div class="love-message-container">
-                    <span class="love-message">อยู่เป็นความสุขของกัน</span>
-                    <span class="love-message">ตี๋รักวีวานะ</span>
-                    <span class="love-message">วีวาคือของขวัญที่ดีที่สุดของตี๋</span>
-                </div>
-                <div class="shooting-star-container"></div>
-            </div>
-        </div>
-    </div>
-
-    <audio id="bgMusic" autoplay loop>
-        <source src="music/RakTae.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="popup" id="memoryPopup">
-        <h3>ความทรงจำของเรา</h3>
-        <p id="memoryContent"></p>
-        <button class="btn" onclick="closePopup()">ปิด</button>
-    </div>
-
-    <script src="script1.js"></script>
-    <script src="enhanced.js"></script>
-    <script src="theme-switcher.js"></script>
-    <script src="theme-fix-v2.js"></script>
-    <link rel="stylesheet" href="carnival-features.css">
-    <script src="carnival-features.js"></script>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content="0;url=index.html#letter" />
+    <title>A Letter for Veeva</title>
+    <link rel="stylesheet" href="assets/fonts.css" />
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <main class="page-intro">
+      <h1>A Letter for Veeva</h1>
+      <p>This chapter has a new home.</p>
+      <a class="text-link" href="index.html#letter">Continue our story ↗</a>
+    </main>
+  </body>
 </html>

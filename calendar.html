@@ -1,812 +1,144 @@
-<!-- ส่วน HTML สำหรับเพิ่มในหน้าเว็บ -->
-<div class="special-dates">
-  <h2 class="special-dates-title">วันพิเศษของเรา</h2>
-  
-  <!-- ส่วนนับถอยหลังสู่วันพิเศษถัดไป -->
-  <div class="next-special-date">
-    <h3>วันพิเศษถัดไป: <span id="next-special-date-name"></span></h3>
-    <div class="countdown-container">
-      <div class="countdown-item">
-        <span id="countdown-days">00</span>
-        <span class="countdown-label">วัน</span>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Our Special Dates — Tee & Veeva</title>
+    <meta
+      name="description"
+      content="The milestones, birthdays, and anniversaries in the story of Tee and Veeva."
+    />
+    <meta name="theme-color" content="#f3f0e7" />
+    <link rel="icon" href="assets/monogram.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/fonts.css" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script type="module" src="assets/site.js"></script>
+    <script type="module" src="assets/calendar.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="header header--page">
+      <a class="wordmark" href="index.html" aria-label="Tee and Veeva, home"
+        >t<span>/</span>v<span class="wordmark-dot">.</span></a
+      >
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="index.html#story">Our story <sup>01</sup></a>
+        <a href="index.html#memories">The moments <sup>02</sup></a>
+        <a href="index.html#letter">For you <sup>03</sup></a>
+      </nav>
+      <div class="header-actions">
+        <button
+          class="sound-toggle"
+          type="button"
+          aria-pressed="false"
+          aria-label="Play our song"
+        >
+          <span class="sound-bars" aria-hidden="true"
+            ><i></i><i></i><i></i><i></i></span
+          ><span data-sound-label>Sound off</span>
+        </button>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+        >
+          Menu <span aria-hidden="true">+</span>
+        </button>
       </div>
-      <div class="countdown-item">
-        <span id="countdown-hours">00</span>
-        <span class="countdown-label">ชั่วโมง</span>
+      <nav
+        id="mobile-nav"
+        class="mobile-nav"
+        aria-label="Mobile navigation"
+        hidden
+      >
+        <a href="index.html#story">Our story</a
+        ><a href="index.html#memories">The moments</a
+        ><a href="index.html#letter">For you</a
+        ><a href="calendar.html">Our dates</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="page-intro">
+        <span class="small-label">You, me & time / Our calendar</span>
+        <h1>Dates that<br /><em>feel like us.</em></h1>
+        <div class="page-intro-bottom">
+          <p>
+            The first hello. The day we became us. Another birthday, another
+            reason to celebrate you.
+          </p>
+          <a class="text-link" href="index.html#milestones"
+            >Back to our story <span aria-hidden="true">↗</span></a
+          >
+        </div>
+      </section>
+      <div class="calendar-layout">
+        <section aria-label="Our special dates calendar">
+          <div class="calendar-toolbar">
+            <h2 id="calendar-month" aria-live="polite" aria-atomic="true"></h2>
+            <div class="calendar-controls">
+              <button
+                type="button"
+                data-calendar-prev
+                aria-label="Previous month"
+              >
+                ←</button
+              ><button type="button" data-calendar-today>Today</button
+              ><button type="button" data-calendar-next aria-label="Next month">
+                →
+              </button>
+            </div>
+          </div>
+          <div class="weekdays" aria-hidden="true">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span
+            ><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div
+            class="calendar-grid"
+            id="calendar-grid"
+            aria-labelledby="calendar-month"
+          ></div>
+          <div class="calendar-legend">
+            <span><i aria-hidden="true"></i>A special day</span
+            ><span><i aria-hidden="true"></i>Today</span>
+          </div>
+          <div
+            id="calendar-detail"
+            class="calendar-event-detail"
+            aria-live="polite"
+          >
+            <h3>Every date has a story.</h3>
+            <p>Select a highlighted date to read a little more.</p>
+          </div>
+          <p class="calendar-timezone">
+            All dates follow Bangkok time (GMT+7).
+          </p>
+        </section>
+        <aside class="calendar-sidebar">
+          <span class="small-label">Four dates to keep close</span>
+          <h2>The ones we remember.</h2>
+          <div id="occasion-list"></div>
+          <a class="next-date" href="#calendar-month"
+            ><span class="small-label">Coming up next</span
+            ><span class="next-date-title" data-next-title
+              >Our next special day</span
+            ><span class="next-date-bottom"
+              ><span data-next-date></span><span data-next-days></span></span
+          ></a>
+        </aside>
       </div>
-      <div class="countdown-item">
-        <span id="countdown-minutes">00</span>
-        <span class="countdown-label">นาที</span>
-      </div>
-      <div class="countdown-item">
-        <span id="countdown-seconds">00</span>
-        <span class="countdown-label">วินาที</span>
-      </div>
-    </div>
-  </div>
-  
-  <!-- ปฏิทินแสดงวันพิเศษ -->
-  <div class="calendar-container">
-    <div class="calendar-header">
-      <button id="prev-month" class="calendar-nav">&lt;</button>
-      <h3 id="current-month-year">เดือน ปี</h3>
-      <button id="next-month" class="calendar-nav">&gt;</button>
-    </div>
-    <div class="calendar-weekdays">
-      <div>อา</div>
-      <div>จ</div>
-      <div>อ</div>
-      <div>พ</div>
-      <div>พฤ</div>
-      <div>ศ</div>
-      <div>ส</div>
-    </div>
-    <div class="calendar-days" id="calendar-days">
-      <!-- วันที่จะถูกเพิ่มด้วย JavaScript -->
-    </div>
-  </div>
-  
-  <!-- รายการวันพิเศษ -->
-  <div class="special-dates-list">
-    <h3>วันสำคัญของเรา</h3>
-    <ul id="special-dates-list">
-      <!-- รายการวันสำคัญจะถูกเพิ่มด้วย JavaScript -->
-    </ul>
-  </div>
-</div>
-
-<!-- สไตล์ CSS สำหรับระบบเช็คอินวันพิเศษ -->
-<style>
-.special-dates {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-radius: 30px;
-  padding: 30px;
-  box-shadow: 0 25px 60px rgba(255, 71, 120, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  max-width: 650px;
-  margin: 40px auto;
-  font-family: 'Prompt', sans-serif;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.special-dates:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 35px 80px rgba(255, 71, 120, 0.35);
-}
-
-.special-dates-title {
-  color: #FF4778;
-  text-align: center;
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  margin-bottom: 20px;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-}
-
-/* ส่วนนับถอยหลัง */
-.next-special-date {
-  text-align: center;
-  margin-bottom: 30px;
-  padding: 15px;
-  background: linear-gradient(45deg, rgba(255, 150, 170, 0.3), rgba(255, 200, 210, 0.3));
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(255, 71, 120, 0.15);
-}
-
-.next-special-date h3 {
-  color: #FF4778;
-  font-size: clamp(1.1rem, 3vw, 1.3rem);
-  margin-bottom: 15px;
-}
-
-.countdown-container {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.countdown-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.countdown-item span:first-child {
-  background-color: rgba(255, 71, 120, 0.8);
-  color: white;
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
-  font-weight: 600;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
-
-.countdown-label {
-  font-size: 0.8rem;
-  color: #FF4778;
-  margin-top: 5px;
-}
-
-/* ปฏิทิน */
-.calendar-container {
-  margin-bottom: 30px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
-  padding: 15px;
-  box-shadow: 0 5px 15px rgba(255, 71, 120, 0.1);
-}
-
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.calendar-nav {
-  background: linear-gradient(45deg, #FF4778, #FF95A8);
-  color: white;
-  border: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  box-shadow: 0 3px 8px rgba(255, 71, 120, 0.3);
-  transition: transform 0.3s;
-}
-
-.calendar-nav:hover {
-  transform: scale(1.1);
-}
-
-#current-month-year {
-  color: #FF4778;
-  font-size: 1.2rem;
-  margin: 0;
-}
-
-.calendar-weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  text-align: center;
-  color: #FF4778;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.calendar-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-}
-
-.calendar-day {
-  height: 45px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  font-size: 0.9rem;
-  margin: 3px;
-}
-
-.calendar-day:hover {
-  background-color: rgba(255, 71, 120, 0.1);
-}
-
-.calendar-day.current {
-  background-color: rgba(255, 71, 120, 0.2);
-  font-weight: bold;
-}
-
-.calendar-day.special-date {
-  background: none;
-  color: #FF1493;
-  position: relative;
-  z-index: 2;
-  font-weight: bold;
-  font-size: 1.1rem;
-  text-shadow: 0px 0px 3px white, 0px 0px 5px white;
-}
-
-.calendar-day.special-date::before {
-  content: "";
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF4778" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: -1;
-  opacity: 0.8;
-  filter: drop-shadow(0px 0px 5px rgba(255, 71, 120, 0.7));
-  animation: heartbeat 1.5s ease-in-out infinite;
-}
-
-@keyframes heartbeat {
-  0% { transform: translate(-50%, -50%) scale(1); }
-  25% { transform: translate(-50%, -50%) scale(1.05); }
-  50% { transform: translate(-50%, -50%) scale(1); }
-  75% { transform: translate(-50%, -50%) scale(1.05); }
-  100% { transform: translate(-50%, -50%) scale(1); }
-}
-
-.calendar-day.special-date:hover {
-  transform: scale(1.1);
-}
-
-.calendar-day.empty {
-  cursor: default;
-}
-
-/* ทูลทิปสำหรับวันพิเศษ */
-.date-tooltip {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(255, 71, 120, 0.9);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.3s;
-  z-index: 100;
-}
-
-.calendar-day.special-date:hover .date-tooltip {
-  visibility: visible;
-  opacity: 1;
-  bottom: calc(100% + 5px);
-}
-
-/* รายการวันพิเศษ */
-.special-dates-list {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
-  padding: 15px;
-  box-shadow: 0 5px 15px rgba(255, 71, 120, 0.1);
-}
-
-.special-dates-list h3 {
-  color: #FF4778;
-  font-size: 1.2rem;
-  margin-top: 0;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-#special-dates-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.special-date-item {
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  background-color: rgba(255, 200, 210, 0.3);
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: transform 0.3s;
-}
-
-.special-date-item:hover {
-  transform: translateX(5px);
-  background-color: rgba(255, 200, 210, 0.5);
-}
-
-.special-date-name {
-  font-weight: 600;
-  color: #FF4778;
-}
-
-.special-date-date {
-  color: #FF6B8B;
-  font-size: 0.9rem;
-}
-
-@media (max-width: 768px) {
-  .countdown-container {
-    flex-wrap: wrap;
-  }
-  
-  .countdown-item {
-    min-width: 70px;
-  }
-  
-  .calendar-day {
-    height: 35px;
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .special-dates {
-    padding: 15px;
-  }
-  
-  .calendar-day {
-    height: 30px;
-    font-size: 0.7rem;
-  }
-}
-</style>
-
-<!-- JavaScript สำหรับระบบเช็คอินวันพิเศษ -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // รายการวันพิเศษของคุณและวีวา
-  const specialDates = [
-    // เกิดความสับสนเล็กน้อย จึงยืนยันให้ชัดเจนว่ามีวันแรกที่รู้จักกัน
-    { date: '2024-11-24', name: 'วันแรกที่รู้จักกัน', isAnnual: true },
-    { date: '2025-03-09', name: 'วันที่คบกัน', isAnnual: true },
-    { date: '2024-07-01', name: 'วันเกิดวีวา', isAnnual: true },
-    { date: '2024-07-31', name: 'วันเกิดตี๋', isAnnual: true },
-  ];
-
-  // ปฏิทิน
-  let currentDate = new Date();
-  let currentMonth = currentDate.getMonth();
-  let currentYear = currentDate.getFullYear();
-
-  const prevMonthBtn = document.getElementById('prev-month');
-  const nextMonthBtn = document.getElementById('next-month');
-  const currentMonthYearElement = document.getElementById('current-month-year');
-  const calendarDaysElement = document.getElementById('calendar-days');
-  const specialDatesListElement = document.getElementById('special-dates-list');
-  
-  // นับถอยหลัง elements
-  const nextSpecialDateNameElement = document.getElementById('next-special-date-name');
-  const countdownDaysElement = document.getElementById('countdown-days');
-  const countdownHoursElement = document.getElementById('countdown-hours');
-  const countdownMinutesElement = document.getElementById('countdown-minutes');
-  const countdownSecondsElement = document.getElementById('countdown-seconds');
-
-  // ชื่อเดือนภาษาไทย
-  const thaiMonths = [
-    'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
-    'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
-  ];
-
-  // ฟังก์ชันเริ่มต้น
-  function init() {
-    renderCalendar();
-    renderSpecialDatesList();
-    updateNextSpecialDateCountdown();
-    
-    // อัพเดทการนับถอยหลังทุกวินาที
-    setInterval(updateNextSpecialDateCountdown, 1000);
-  }
-
-  // ฟังก์ชันเช็คว่าเป็นวันพิเศษรายปีหรือไม่
-  function isSpecialDay(day, month, year) {
-    const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    const exactMatch = specialDates.find(d => d.date === dateString);
-    
-    if (exactMatch) {
-      return exactMatch;
-    }
-    
-    // เช็คครบรอบรายปี (เฉพาะวันและเดือนตรงกัน)
-    const annualMatches = specialDates.filter(d => d.isAnnual);
-    for (const special of annualMatches) {
-      const specialDate = new Date(special.date);
-      if (day === specialDate.getDate() && month === specialDate.getMonth()) {
-        // สร้างชื่อที่เหมาะสมสำหรับครบรอบ
-        let name = special.name;
-        if (special.date === '2024-11-24' || special.date === '2025-03-09') {
-          const startYear = special.date.substring(0, 4);
-          const yearDiff = year - parseInt(startYear);
-          if (yearDiff > 0) {
-            name = `${name} (ครบรอบ ${yearDiff} ปี)`;
-          }
-        }
-        return { ...special, name };
-      }
-    }
-    
-    return null;
-  }
-
-  // ฟังก์ชันสร้างปฏิทิน
-  function renderCalendar() {
-    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    
-    currentMonthYearElement.textContent = `${thaiMonths[currentMonth]} ${currentYear + 543}`;
-    calendarDaysElement.innerHTML = '';
-    
-    // สร้างช่องว่างสำหรับวันก่อนหน้าวันที่ 1
-    for (let i = 0; i < firstDayOfMonth; i++) {
-      const emptyDay = document.createElement('div');
-      emptyDay.classList.add('calendar-day', 'empty');
-      calendarDaysElement.appendChild(emptyDay);
-    }
-    
-    // สร้างวันในเดือน
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dayElement = document.createElement('div');
-      dayElement.classList.add('calendar-day');
-      dayElement.textContent = day;
-      
-      const dateString = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-      
-      // เช็คว่าเป็นวันปัจจุบันหรือไม่
-      if (
-        currentYear === currentDate.getFullYear() && 
-        currentMonth === currentDate.getMonth() && 
-        day === currentDate.getDate()
-      ) {
-        dayElement.classList.add('current');
-      }
-      
-      // เช็คว่าเป็นวันพิเศษหรือไม่
-      const specialDate = isSpecialDay(day, currentMonth, currentYear);
-      if (specialDate) {
-        dayElement.classList.add('special-date');
-        
-        // เพิ่มทูลทิป
-        const tooltip = document.createElement('div');
-        tooltip.classList.add('date-tooltip');
-        tooltip.textContent = specialDate.name;
-        dayElement.appendChild(tooltip);
-        
-        // เพิ่ม event listener เมื่อคลิกวันพิเศษ
-        dayElement.addEventListener('click', function() {
-          // สร้างกล่องป๊อปอัพสวยงาม
-          showSpecialDatePopup(specialDate, dateString);
-        });
-      }
-      
-      calendarDaysElement.appendChild(dayElement);
-    }
-  }
-  
-  // ฟังก์ชันแสดงป๊อปอัพวันพิเศษ
-  function showSpecialDatePopup(specialDate, dateString) {
-    // ลบป๊อปอัพเดิมถ้ามี
-    const existingPopup = document.querySelector('.special-date-popup');
-    if (existingPopup) {
-      existingPopup.remove();
-    }
-    
-    // สร้างป๊อปอัพ
-    const popup = document.createElement('div');
-    popup.classList.add('special-date-popup');
-    
-    const dateObj = new Date(dateString);
-    const formattedDate = `${dateObj.getDate()} ${thaiMonths[dateObj.getMonth()]} ${dateObj.getFullYear() + 543}`;
-    
-    // คำนวณจำนวนวันระหว่างวันนี้กับวันพิเศษ
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    dateObj.setHours(0, 0, 0, 0);
-    
-    const diffTime = dateObj - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    let timeMessage = '';
-    if (diffDays > 0) {
-      timeMessage = `อีก ${diffDays} วัน`;
-    } else if (diffDays < 0) {
-      timeMessage = `ผ่านมาแล้ว ${Math.abs(diffDays)} วัน`;
-    } else {
-      timeMessage = 'วันนี้!';
-    }
-    
-    popup.innerHTML = `
-      <div class="popup-header">
-        <h3>${specialDate.name}</h3>
-        <button class="popup-close">&times;</button>
-      </div>
-      <div class="popup-content">
-        <p class="popup-date">${formattedDate}</p>
-        <p class="popup-time">${timeMessage}</p>
-        <div class="popup-heart"></div>
-      </div>
-    `;
-    
-    // สไตล์ของป๊อปอัพ
-    popup.style.position = 'fixed';
-    popup.style.top = '50%';
-    popup.style.left = '50%';
-    popup.style.transform = 'translate(-50%, -50%)';
-    popup.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 200, 210, 0.9))';
-    popup.style.borderRadius = '20px';
-    popup.style.padding = '20px';
-    popup.style.boxShadow = '0 10px 30px rgba(255, 71, 120, 0.3)';
-    popup.style.zIndex = '1000';
-    popup.style.minWidth = '300px';
-    popup.style.maxWidth = '90%';
-    popup.style.backdropFilter = 'blur(10px)';
-    popup.style.fontFamily = "'Prompt', sans-serif";
-    
-    // สไตล์ส่วนหัว
-    const header = popup.querySelector('.popup-header');
-    header.style.display = 'flex';
-    header.style.justifyContent = 'space-between';
-    header.style.alignItems = 'center';
-    header.style.marginBottom = '15px';
-    
-    const title = popup.querySelector('h3');
-    title.style.margin = '0';
-    title.style.color = '#FF4778';
-    title.style.fontSize = '1.5rem';
-    
-    const closeBtn = popup.querySelector('.popup-close');
-    closeBtn.style.background = 'none';
-    closeBtn.style.border = 'none';
-    closeBtn.style.color = '#FF4778';
-    closeBtn.style.fontSize = '1.8rem';
-    closeBtn.style.cursor = 'pointer';
-    
-    // สไตล์เนื้อหา
-    const popupDate = popup.querySelector('.popup-date');
-    popupDate.style.fontSize = '1.2rem';
-    popupDate.style.color = '#FF6B8B';
-    popupDate.style.margin = '10px 0';
-    
-    const popupTime = popup.querySelector('.popup-time');
-    popupTime.style.fontSize = '1.1rem';
-    popupTime.style.color = '#FF4778';
-    popupTime.style.fontWeight = 'bold';
-    popupTime.style.margin = '10px 0 20px';
-    
-    // สร้างหัวใจเต้น
-    const heart = popup.querySelector('.popup-heart');
-    heart.style.width = '50px';
-    heart.style.height = '50px';
-    heart.style.background = "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path fill=\"%23FF4778\" d=\"M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z\" /></svg>')";
-    heart.style.backgroundRepeat = 'no-repeat';
-    heart.style.backgroundSize = 'contain';
-    heart.style.margin = '10px auto';
-    heart.style.animation = 'heartbeat 1.5s infinite';
-    
-    // สร้าง keyframes สำหรับหัวใจเต้น
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes heartbeat {
-        0% { transform: scale(1); }
-        25% { transform: scale(1.1); }
-        50% { transform: scale(1); }
-        75% { transform: scale(1.1); }
-        100% { transform: scale(1); }
-      }
-    `;
-    document.head.appendChild(style);
-    
-    // เพิ่ม event listener สำหรับปุ่มปิด
-    closeBtn.addEventListener('click', function() {
-      popup.remove();
-    });
-    
-    // เพิ่มป๊อปอัพลงในเอกสาร
-    document.body.appendChild(popup);
-    
-    // สร้างเอฟเฟคเมื่อแสดงป๊อปอัพ
-    popup.style.opacity = '0';
-    popup.style.transition = 'all 0.3s ease';
-    setTimeout(() => {
-      popup.style.opacity = '1';
-    }, 10);
-    
-    // ปิดป๊อปอัพเมื่อคลิกที่อื่น
-    document.addEventListener('click', function closePopupOnOutsideClick(e) {
-      if (!popup.contains(e.target) && e.target !== popup) {
-        popup.remove();
-        document.removeEventListener('click', closePopupOnOutsideClick);
-      }
-    });
-  }
-  
-  // ฟังก์ชันแสดงรายการวันพิเศษ
-  function renderSpecialDatesList() {
-    specialDatesListElement.innerHTML = '';
-    
-    const currentYear = new Date().getFullYear();
-    let allSpecialDates = [];
-    
-    // สร้างรายการวันสำคัญทั้งหมดรวมถึงวันครบรอบประจำปี
-    specialDates.forEach(specialDate => {
-      const dateObj = new Date(specialDate.date);
-      
-      if (specialDate.isAnnual) {
-        const baseName = specialDate.name;
-        const originalYear = parseInt(specialDate.date.split('-')[0]);
-        
-        // เพิ่มวันสำคัญสำหรับปีปัจจุบัน
-        if (specialDate.date === '2024-11-24' || specialDate.date === '2025-03-09') {
-          // วันที่รู้จักกันและวันที่คบกัน - แสดงเป็นครบรอบปี
-          const yearDiff = currentYear - originalYear;
-          let name = baseName;
-          if (yearDiff > 0) {
-            name = `${baseName} (ครบรอบ ${yearDiff} ปี)`;
-          }
-          
-          allSpecialDates.push({
-            date: `${currentYear}-${specialDate.date.substring(5)}`,
-            name: name,
-            isAnnual: true
-          });
-        } else {
-          // วันเกิด - ไม่ต้องแสดงเป็นครบรอบ แค่เปลี่ยนปีเป็นปีปัจจุบัน
-          allSpecialDates.push({
-            date: `${currentYear}-${specialDate.date.substring(5)}`,
-            name: baseName,
-            isAnnual: true
-          });
-        }
-      } else {
-        // วันสำคัญที่ไม่ใช่รายปี
-        allSpecialDates.push(specialDate);
-      }
-    });
-    
-    // จัดเรียงตามวันที่
-    const sortedDates = [...allSpecialDates].sort((a, b) => new Date(a.date) - new Date(b.date));
-    
-    sortedDates.forEach(specialDate => {
-      const listItem = document.createElement('li');
-      listItem.classList.add('special-date-item');
-      
-      const dateObj = new Date(specialDate.date);
-      const formattedDate = `${dateObj.getDate()} ${thaiMonths[dateObj.getMonth()]} ${dateObj.getFullYear() + 543}`;
-      
-      listItem.innerHTML = `
-        <span class="special-date-name">${specialDate.name}</span>
-        <span class="special-date-date">${formattedDate}</span>
-      `;
-      
-      // เพิ่ม event listener เมื่อคลิกที่รายการ
-      listItem.addEventListener('click', function() {
-        showSpecialDatePopup(specialDate, specialDate.date);
-      });
-      
-      specialDatesListElement.appendChild(listItem);
-    });
-  }
-  
-  // ฟังก์ชันอัพเดทการนับถอยหลังสู่วันพิเศษถัดไป
-  function updateNextSpecialDateCountdown() {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    
-    // สร้างรายการวันสำคัญในปีปัจจุบันและปีถัดไป
-    let allUpcomingDates = [];
-    
-    // วันสำคัญในปีปัจจุบัน
-    specialDates.forEach(specialDate => {
-      const dateObj = new Date(specialDate.date);
-      const month = dateObj.getMonth();
-      const day = dateObj.getDate();
-      
-      // สร้างวันที่สำหรับปีปัจจุบัน
-      const thisYearDate = new Date(currentYear, month, day);
-      
-      if (thisYearDate > now) {
-        const dateString = `${currentYear}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        
-        // จัดการชื่อสำหรับครบรอบรายปี
-        let name = specialDate.name;
-        if (specialDate.isAnnual && (specialDate.date === '2024-11-24' || specialDate.date === '2025-03-09')) {
-          const originalYear = parseInt(specialDate.date.split('-')[0]);
-          const yearDiff = currentYear - originalYear;
-          if (yearDiff > 0) {
-            name = `${specialDate.name} (ครบรอบ ${yearDiff} ปี)`;
-          }
-        }
-        
-        allUpcomingDates.push({
-          date: dateString,
-          name: name
-        });
-      }
-      
-      // สร้างวันที่สำหรับปีถัดไป (ใช้เฉพาะกับวันที่มีครบรอบรายปี)
-      if (specialDate.isAnnual) {
-        const nextYearDate = new Date(currentYear + 1, month, day);
-        const dateString = `${currentYear + 1}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        
-        // จัดการชื่อสำหรับครบรอบรายปี
-        let name = specialDate.name;
-        if (specialDate.date === '2024-11-24' || specialDate.date === '2025-03-09') {
-          const originalYear = parseInt(specialDate.date.split('-')[0]);
-          const yearDiff = (currentYear + 1) - originalYear;
-          if (yearDiff > 0) {
-            name = `${specialDate.name} (ครบรอบ ${yearDiff} ปี)`;
-          }
-        }
-        
-        allUpcomingDates.push({
-          date: dateString,
-          name: name
-        });
-      }
-    });
-    
-    // จัดเรียงตามวันที่ใกล้สุด
-    allUpcomingDates.sort((a, b) => new Date(a.date) - new Date(b.date));
-    
-    // กรองเฉพาะวันที่ในอนาคต
-    const upcomingSpecialDates = allUpcomingDates.filter(d => new Date(d.date) > now);
-    
-    if (upcomingSpecialDates.length === 0) {
-      nextSpecialDateNameElement.textContent = 'ไม่มีกำหนดการ';
-      countdownDaysElement.textContent = '--';
-      countdownHoursElement.textContent = '--';
-      countdownMinutesElement.textContent = '--';
-      countdownSecondsElement.textContent = '--';
-      return;
-    }
-    
-    const nextSpecialDate = upcomingSpecialDates[0];
-    const targetDate = new Date(nextSpecialDate.date);
-    
-    // คำนวณระยะเวลาที่เหลือ
-    const timeRemaining = targetDate - now;
-    
-    if (timeRemaining <= 0) {
-      nextSpecialDateNameElement.textContent = 'วันนี้คือ ' + nextSpecialDate.name + '!';
-      countdownDaysElement.textContent = '00';
-      countdownHoursElement.textContent = '00';
-      countdownMinutesElement.textContent = '00';
-      countdownSecondsElement.textContent = '00';
-      return;
-    }
-    
-    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-    
-    nextSpecialDateNameElement.textContent = nextSpecialDate.name;
-    countdownDaysElement.textContent = String(days).padStart(2, '0');
-    countdownHoursElement.textContent = String(hours).padStart(2, '0');
-    countdownMinutesElement.textContent = String(minutes).padStart(2, '0');
-    countdownSecondsElement.textContent = String(seconds).padStart(2, '0');
-  }
-  
-  // Event listeners
-  prevMonthBtn.addEventListener('click', function() {
-    currentMonth--;
-    if (currentMonth < 0) {
-      currentMonth = 11;
-      currentYear--;
-    }
-    renderCalendar();
-  });
-  
-  nextMonthBtn.addEventListener('click', function() {
-    currentMonth++;
-    if (currentMonth > 11) {
-      currentMonth = 0;
-      currentYear++;
-    }
-    renderCalendar();
-  });
-  
-  // เริ่มต้นการทำงาน
-  init();
-});
-</script>
+      <section class="page-footer-cta">
+        <h2>More days.<br /><em>More memories.</em></h2>
+        <a class="round-link" href="slides.html"
+          >Open our photo album <span aria-hidden="true">↗</span></a
+        >
+      </section>
+    </main>
+    <footer class="footer">
+      <a href="index.html">Tee & Veeva</a
+      ><span>A little corner of the internet. A whole lot of love.</span
+      ><a href="index.html">Back to our story ↗</a>
+    </footer>
+    <audio id="our-song" src="music/RakTae.mp3" preload="none" loop></audio>
+  </body>
+</html>

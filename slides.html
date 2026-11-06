@@ -1,199 +1,378 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Journey - Tee & Veeva</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sriracha&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="premium.css">
-    <script src="premium.js"></script>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            background: #000;
-        }
-        .slide-container {
-            height: 100vh;
-            width: 100vw;
-            scroll-snap-type: y mandatory;
-            overflow-y: scroll;
-            scrollbar-width: none;
-        }
-        .slide-container::-webkit-scrollbar {
-            display: none;
-        }
-        .full-slide {
-            height: 100vh;
-            width: 100vw;
-            scroll-snap-align: start;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .slide-content {
-            z-index: 10;
-            text-align: center;
-            color: white;
-            padding: 3rem;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            max-width: 85%;
-            transform: translateY(60px) scale(0.95);
-            opacity: 0;
-            transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-        }
-        .full-slide.active .slide-content {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-        }
-        .slide-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            transition: transform 10s linear;
-            z-index: 1;
-        }
-        .full-slide.active .slide-bg {
-            transform: scale(1.1);
-        }
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
-            z-index: 2;
-        }
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            margin-bottom: 1rem;
-            font-family: 'Sriracha', cursive;
-        }
-        p {
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            font-family: 'Prompt', sans-serif;
-        }
-        .nav-dots {
-            position: fixed;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .dot.active {
-            background: #ff4d6d;
-            transform: scale(1.5);
-            box-shadow: 0 0 15px #ff4d6d;
-        }
-    </style>
-</head>
-<body>
-    <div class="nav-dots" id="navDots"></div>
-    <div class="slide-container" id="slideContainer">
-        <section class="full-slide active">
-            <div class="slide-bg" style="background-image: url('images/S__4243477_0.jpg');"></div>
-            <div class="overlay"></div>
-            <div class="slide-content">
-                <h1>จุดเริ่มต้นของเรา</h1>
-                <p>ทุกอย่างเริ่มต้นจากวันที่เราได้รู้จักกัน...</p>
-            </div>
-        </section>
-        <section class="full-slide">
-            <div class="slide-bg" style="background-image: url('images/S__4243479_0.jpg');"></div>
-            <div class="overlay"></div>
-            <div class="slide-content">
-                <h1>ความทรงจำที่แสนพิเศษ</h1>
-                <p>ทุกรอยยิ้ม ทุกเสียงหัวเราะ มีค่าเสมอ</p>
-            </div>
-        </section>
-        <section class="full-slide">
-            <div class="slide-bg" style="background-image: url('images/S__4243480_0.jpg');"></div>
-            <div class="overlay"></div>
-            <div class="slide-content">
-                <h1>การเดินทางของเรา</h1>
-                <p>ไม่ว่าจะไปที่ไหน แค่มีเธออยู่ข้างๆ ก็พอ</p>
-            </div>
-        </section>
-        <section class="full-slide">
-            <div class="slide-bg" style="background-image: url('images/S__4243481_0.jpg');"></div>
-            <div class="overlay"></div>
-            <div class="slide-content">
-                <h1>คำสัญญาจากใจ</h1>
-                <p>ตี๋จะดูแลวีวาให้ดีที่สุดตลอดไปนะ</p>
-            </div>
-        </section>
-        <section class="full-slide">
-            <div class="slide-bg" style="background-image: url('images/cup3.jpg');"></div>
-            <div class="overlay"></div>
-            <div class="slide-content">
-                <h1>รักวีวาที่สุดเลย ♥</h1>
-                <p>ขอบคุณที่เข้ามาเป็นส่วนหนึ่งในชีวิตของตี๋นะ</p>
-                <br>
-                <a href="congratulations.html" class="btn-premium">กลับหน้าหลัก</a>
-            </div>
-        </section>
-    </div>
-
-    <script>
-        const container = document.getElementById('slideContainer');
-        const slides = document.querySelectorAll('.full-slide');
-        const navDots = document.getElementById('navDots');
-
-        // Create dots
-        slides.forEach((_, i) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                container.scrollTo({
-                    top: i * window.innerHeight,
-                    behavior: 'smooth'
-                });
-            });
-            navDots.appendChild(dot);
-        });
-
-        // Intersection Observer for active state
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    slides.forEach(s => s.classList.remove('active'));
-                    entry.target.classList.add('active');
-                    
-                    const index = Array.from(slides).indexOf(entry.target);
-                    document.querySelectorAll('.dot').forEach((d, i) => {
-                        d.classList.toggle('active', i === index);
-                    });
-                }
-            });
-        }, { threshold: 0.5 });
-
-        slides.forEach(slide => observer.observe(slide));
-    </script>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Our Photo Journal — Tee & Veeva</title>
+    <meta
+      name="description"
+      content="Twelve little moments from the story of Tee and Veeva. A photo album, made with love."
+    />
+    <meta name="theme-color" content="#f3f0e7" />
+    <link rel="icon" href="assets/monogram.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/fonts.css" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script type="module" src="assets/site.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="header header--page">
+      <a class="wordmark" href="index.html" aria-label="Tee and Veeva, home"
+        >t<span>/</span>v<span class="wordmark-dot">.</span></a
+      >
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="index.html#story">Our story <sup>01</sup></a>
+        <a href="index.html#memories">The moments <sup>02</sup></a>
+        <a href="index.html#letter">For you <sup>03</sup></a>
+      </nav>
+      <div class="header-actions">
+        <button
+          class="sound-toggle"
+          type="button"
+          aria-pressed="false"
+          aria-label="Play our song"
+        >
+          <span class="sound-bars" aria-hidden="true"
+            ><i></i><i></i><i></i><i></i></span
+          ><span data-sound-label>Sound off</span>
+        </button>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+        >
+          Menu <span aria-hidden="true">+</span>
+        </button>
+      </div>
+      <nav
+        id="mobile-nav"
+        class="mobile-nav"
+        aria-label="Mobile navigation"
+        hidden
+      >
+        <a href="index.html#story">Our story</a
+        ><a href="index.html#memories">The moments</a
+        ><a href="index.html#letter">For you</a
+        ><a href="calendar.html">Our dates</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="page-intro">
+        <span class="small-label">The moments / A photo journal</span>
+        <h1>Little moments.<br /><em>Everything to me.</em></h1>
+        <div class="page-intro-bottom">
+          <p>
+            No grand occasion needed. Just the kind of moments I want to
+            remember, with you.
+          </p>
+          <span class="small-label">12 photographs / One favourite person</span>
+        </div>
+      </section>
+      <div class="album-grid">
+        <figure class="album-item" style="--ratio: 4/5">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/mirror.webp"
+            data-caption="Just us, being us."
+            aria-label="Enlarge photograph 1: Just us, being us."
+          >
+            <img
+              src="assets/photos/mirror.webp"
+              alt="A little kiss in a mirror selfie"
+              loading="eager"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption>
+            <span>Just us, being us.</span><span>01 / 12</span>
+          </figcaption>
+        </figure>
+        <figure class="album-item" style="--ratio: 3/4">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/beginning.webp"
+            data-caption="Blue skies & you."
+            aria-label="Enlarge photograph 2: Blue skies & you."
+          >
+            <img
+              src="assets/photos/beginning.webp"
+              alt="Tee and Veeva smiling in the sunshine"
+              loading="eager"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption>
+            <span>Blue skies & you.</span><span>02 / 12</span>
+          </figcaption>
+        </figure>
+        <figure class="album-item" style="--ratio: 3/4">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/little-world.webp"
+            data-caption="A little more love."
+            aria-label="Enlarge photograph 3: A little more love."
+          >
+            <img
+              src="assets/photos/little-world.webp"
+              alt="Tee and Veeva with a fluffy husky"
+              loading="eager"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption>
+            <span>A little more love.</span><span>03 / 12</span>
+          </figcaption>
+        </figure>
+        <figure class="album-item" style="--ratio: 3/4">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/sea.webp"
+            data-caption="My favourite view."
+            aria-label="Enlarge photograph 4: My favourite view."
+          >
+            <img
+              src="assets/photos/sea.webp"
+              alt="Tee and Veeva together by the sea"
+              loading="lazy"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption>
+            <span>My favourite view.</span><span>04 / 12</span>
+          </figcaption>
+        </figure>
+        <figure class="album-item" style="--ratio: 4/5">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/together.webp"
+            data-caption="Better, together."
+            aria-label="Enlarge photograph 5: Better, together."
+          >
+            <img
+              src="assets/photos/together.webp"
+              alt="Veeva smiling with Tee beside her"
+              loading="lazy"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption>
+            <span>Better, together.</span><span>05 / 12</span>
+          </figcaption>
+        </figure>
+        <figure class="album-item" style="--ratio: 3/4">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/sunshine.webp"
+            data-caption="A pocketful of sunshine."
+            aria-label="Enlarge photograph 6: A pocketful of sunshine."
+          >
+            <img
+              src="assets/photos/sunshine.webp"
+              alt="A happy moment beneath the blue sky"
+              loading="lazy"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption>
+            <span>A pocketful of sunshine.</span><span>06 / 12</span>
+          </figcaption>
+        </figure>
+        <figure class="album-item" style="--ratio: 3/4">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/evening.webp"
+            data-caption="Close to you."
+            aria-label="Enlarge photograph 7: Close to you."
+          >
+            <img
+              src="assets/photos/evening.webp"
+              alt="Tee and Veeva posing together in the evening"
+              loading="lazy"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption>
+            <span>Close to you.</span><span>07 / 12</span>
+          </figcaption>
+        </figure>
+        <figure class="album-item" style="--ratio: 3/4">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/coffee.webp"
+            data-caption="The everyday kind of happy."
+            aria-label="Enlarge photograph 8: The everyday kind of happy."
+          >
+            <img
+              src="assets/photos/coffee.webp"
+              alt="A cosy moment together at a cafe"
+              loading="lazy"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption>
+            <span>The everyday kind of happy.</span><span>08 / 12</span>
+          </figcaption>
+        </figure>
+        <figure class="album-item" style="--ratio: 3/4">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/sky.webp"
+            data-caption="Nothing else needed."
+            aria-label="Enlarge photograph 9: Nothing else needed."
+          >
+            <img
+              src="assets/photos/sky.webp"
+              alt="Tee and Veeva enjoying the sunshine"
+              loading="lazy"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption>
+            <span>Nothing else needed.</span><span>09 / 12</span>
+          </figcaption>
+        </figure>
+        <figure class="album-item" style="--ratio: 1/1">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/you.webp"
+            data-caption="You, always."
+            aria-label="Enlarge photograph 10: You, always."
+          >
+            <img
+              src="assets/photos/you.webp"
+              alt="Veeva looking through a round cafe window"
+              loading="lazy"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption><span>You, always.</span><span>10 / 12</span></figcaption>
+        </figure>
+        <figure class="album-item" style="--ratio: 3/4">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/keepsake.webp"
+            data-caption="Little things, big feelings."
+            aria-label="Enlarge photograph 11: Little things, big feelings."
+          >
+            <img
+              src="assets/photos/keepsake.webp"
+              alt="Two colourful matching keepsakes held together"
+              loading="lazy"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption>
+            <span>Little things, big feelings.</span><span>11 / 12</span>
+          </figcaption>
+        </figure>
+        <figure class="album-item" style="--ratio: 4/3">
+          <button
+            class="photo-open"
+            data-photo="assets/photos/cover.webp"
+            data-caption="A heart made for two."
+            aria-label="Enlarge photograph 12: A heart made for two."
+          >
+            <img
+              src="assets/photos/cover.webp"
+              alt="Tee and Veeva making a heart with their hands"
+              loading="lazy"
+              width="900"
+              height="1200"
+            /><span class="photo-open-hint" aria-hidden="true"
+              >View photograph ↗</span
+            >
+          </button>
+          <figcaption>
+            <span>A heart made for two.</span><span>12 / 12</span>
+          </figcaption>
+        </figure>
+      </div>
+      <section class="album-video" aria-labelledby="video-title">
+        <span class="small-label">A moving memory</span>
+        <h2 id="video-title">Press play. <em>Stay a little.</em></h2>
+        <video
+          controls
+          playsinline
+          preload="none"
+          poster="assets/photos/together.webp"
+          aria-label="A video memory of Tee and Veeva"
+        >
+          <source src="video/video.mp4" type="video/mp4" />
+          Your browser does not support video.
+          <a href="video/video.mp4">Download our video.</a>
+        </video>
+      </section>
+      <section class="page-footer-cta">
+        <h2>Our story is<br /><em>still unfolding.</em></h2>
+        <a class="round-link" href="index.html#letter"
+          >A letter for you <span aria-hidden="true">↗</span></a
+        >
+      </section>
+    </main>
+    <dialog
+      class="photo-dialog"
+      id="photo-dialog"
+      aria-label="Photograph viewer"
+    >
+      <button
+        class="dialog-close"
+        data-close-dialog
+        aria-label="Close photograph"
+      >
+        Close <span aria-hidden="true">×</span>
+      </button>
+      <figure>
+        <img src="assets/photos/cover.webp" alt="" />
+        <figcaption></figcaption>
+      </figure>
+      <div class="dialog-navigation">
+        <button type="button" data-photo-prev aria-label="Previous photograph">
+          ← Previous</button
+        ><span data-photo-position></span
+        ><button type="button" data-photo-next aria-label="Next photograph">
+          Next →
+        </button>
+      </div>
+    </dialog>
+    <footer class="footer">
+      <a href="index.html">Tee & Veeva</a
+      ><span>A little corner of the internet. A whole lot of love.</span
+      ><a href="index.html">Back to our story ↗</a>
+    </footer>
+    <audio id="our-song" src="music/RakTae.mp3" preload="none" loop></audio>
+  </body>
 </html>
