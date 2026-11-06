@@ -2,7 +2,7 @@
 
 The journal was checked in Chromium at widths 320, 375, 390, 600, 768, 900, 1024, 1440, and 1920 pixels, plus 844×390 landscape. Each size passed checks for page overflow and visible button targets of at least 44×44 CSS pixels. A narrow-calendar overflow was reproduced at 320px and fixed by allowing grid children to shrink and sizing the seven date columns explicitly.
 
-The river portrait is the first image and the first album photograph. All twelve photos, both films, the entire letter and postscript, milestones, and calendar are in `index.html`. Navigation points to local chapter IDs; former page URLs redirect to those chapters. The six HTML entry points are English and chapter IDs are unique.
+The river portrait is the first image and the first album photograph. All eleven photos, both films, the entire letter and postscript, milestones, and calendar are in `index.html`. Navigation points to local chapter IDs; former page URLs redirect to those chapters. The six HTML entry points are English and chapter IDs are unique.
 
 Checked behavior:
 
