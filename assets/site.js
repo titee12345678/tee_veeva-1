@@ -128,9 +128,34 @@ motionPreference.addEventListener("change", () => {
     document.documentElement.classList.remove("motion-ready");
     reveals.forEach((element) => element.classList.add("is-visible"));
   }
+  if (!motionPreference.matches)
+    document.documentElement.classList.add("motion-ready");
   requestScrollRender();
 });
 requestScrollRender();
+
+// Bring keyboard-focused photographs into the pinned viewport, just as scrolling does.
+track?.addEventListener("focusin", (event) => {
+  if (motionPreference.matches || mobilePreference.matches) return;
+  const frame = event.target.closest(".film-frame, .film-end");
+  if (!frame) return;
+  requestAnimationFrame(() => {
+    const bounds = frame.getBoundingClientRect();
+    if (bounds.left >= 20 && bounds.right <= innerWidth - 20) return;
+    const gutter = parseFloat(getComputedStyle(track).paddingLeft);
+    const relativeLeft = bounds.left - track.getBoundingClientRect().left;
+    const travel = Math.max(0, track.scrollWidth - innerWidth);
+    const progress = travel ? clamp((relativeLeft - gutter) / travel) : 0;
+    document.querySelector(".memories-pin").scrollLeft = 0;
+    document.querySelector(".film-window").scrollLeft = 0;
+    window.scrollTo({
+      top:
+        memories.offsetTop + progress * (memories.offsetHeight - innerHeight),
+      behavior: "instant",
+    });
+    renderScroll();
+  });
+});
 
 // Keep navigation usable without trapping the reader behind an overlay.
 const menuButton = document.querySelector(".menu-toggle");
