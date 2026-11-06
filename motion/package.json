@@ -1,0 +1,16 @@
+{
+  "name": "tee-veeva-motion",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.tsx --port=4174 --no-open",
+    "render": "remotion render src/index.tsx RiverPostcard ../assets/motion/our-story.mp4 --codec=h264 --crf=23 --pixel-format=yuv420p --concurrency=2 --browser-executable='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'",
+    "poster": "remotion still src/index.tsx RiverPostcard ../assets/motion/poster.jpg --frame=80 --browser-executable='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.541",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.541"
+  }
+}
