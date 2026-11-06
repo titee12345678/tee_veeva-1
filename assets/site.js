@@ -8,10 +8,7 @@ const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
 const cover = document.querySelector(".cover");
 const coverImage = document.querySelector("[data-cover-image]");
 const parallax = [...document.querySelectorAll("[data-parallax]")];
-const memories = document.querySelector(".memories");
-const track = document.querySelector(".film-track");
-const filmProgress = document.querySelector(".film-progress span");
-const filmInstruction = document.querySelector(".film-instruction");
+const header = document.querySelector("[data-header]");
 const letter = document.querySelector("[data-letter]");
 const readingProgress = document.querySelector(".reading-progress");
 let words = [];
@@ -42,8 +39,9 @@ if (letter) {
 }
 
 const reveals = document.querySelectorAll("[data-reveal]");
-if (!motionPreference.matches && "IntersectionObserver" in window) {
-  document.documentElement.classList.add("motion-ready");
+if ("IntersectionObserver" in window) {
+  if (!motionPreference.matches)
+    document.documentElement.classList.add("motion-ready");
   const observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries)
@@ -61,6 +59,7 @@ function renderScroll() {
   pendingFrame = false;
   const reduced = motionPreference.matches;
   const height = innerHeight;
+  header?.classList.toggle("is-scrolled", scrollY > 40);
   const scrollable = document.documentElement.scrollHeight - height;
   if (readingProgress)
     readingProgress.style.transform = `scaleX(${scrollable > 0 ? clamp(scrollY / scrollable) : 0})`;
@@ -81,28 +80,6 @@ function renderScroll() {
         Number(element.dataset.parallax);
       element.style.translate = `0 ${clamp(distance, -75, 75)}px`;
     }
-  }
-  if (filmInstruction) {
-    const instruction = reduced
-      ? "Explore the photographs →"
-      : mobilePreference.matches
-        ? "Swipe to turn the pages →"
-        : "Keep scrolling to turn the pages →";
-    if (filmInstruction.textContent !== instruction)
-      filmInstruction.textContent = instruction;
-  }
-  if (memories && track) {
-    const rect = memories.getBoundingClientRect();
-    const progress = clamp(
-      -rect.top / Math.max(1, memories.offsetHeight - height),
-    );
-    const travel = Math.max(0, track.scrollWidth - innerWidth);
-    track.style.transform =
-      reduced || mobilePreference.matches
-        ? ""
-        : `translateX(${-progress * travel}px)`;
-    if (filmProgress)
-      filmProgress.style.transform = `translateX(${progress * 400}%)`;
   }
   if (letter) {
     const rect = letter.getBoundingClientRect();
@@ -128,34 +105,11 @@ motionPreference.addEventListener("change", () => {
     document.documentElement.classList.remove("motion-ready");
     reveals.forEach((element) => element.classList.add("is-visible"));
   }
-  if (!motionPreference.matches)
+  if (!motionPreference.matches && "IntersectionObserver" in window)
     document.documentElement.classList.add("motion-ready");
   requestScrollRender();
 });
 requestScrollRender();
-
-// Bring keyboard-focused photographs into the pinned viewport, just as scrolling does.
-track?.addEventListener("focusin", (event) => {
-  if (motionPreference.matches || mobilePreference.matches) return;
-  const frame = event.target.closest(".film-frame, .film-end");
-  if (!frame) return;
-  requestAnimationFrame(() => {
-    const bounds = frame.getBoundingClientRect();
-    if (bounds.left >= 20 && bounds.right <= innerWidth - 20) return;
-    const gutter = parseFloat(getComputedStyle(track).paddingLeft);
-    const relativeLeft = bounds.left - track.getBoundingClientRect().left;
-    const travel = Math.max(0, track.scrollWidth - innerWidth);
-    const progress = travel ? clamp((relativeLeft - gutter) / travel) : 0;
-    document.querySelector(".memories-pin").scrollLeft = 0;
-    document.querySelector(".film-window").scrollLeft = 0;
-    window.scrollTo({
-      top:
-        memories.offsetTop + progress * (memories.offsetHeight - innerHeight),
-      behavior: "instant",
-    });
-    renderScroll();
-  });
-});
 
 // Keep navigation usable without trapping the reader behind an overlay.
 const menuButton = document.querySelector(".menu-toggle");
@@ -271,11 +225,6 @@ for (const dialog of document.querySelectorAll("dialog")) {
       dialog.close();
   });
 }
-document
-  .querySelector("[data-open-note]")
-  ?.addEventListener("click", () =>
-    document.querySelector("#note-dialog")?.showModal(),
-  );
 
 function updateDates() {
   const counter = document.querySelector("[data-days-together]");
@@ -295,3 +244,87 @@ function updateDates() {
 }
 updateDates();
 setInterval(updateDates, 60_000);
+
+// Chapter links stay in the same document and track the reader's place.
+const chapterLinks = [
+  ...document.querySelectorAll(".desktop-nav a, .mobile-nav a"),
+];
+if ("IntersectionObserver" in window) {
+  const chapters = new IntersectionObserver(
+    (entries) => {
+      const current = entries.find((entry) => entry.isIntersecting);
+      if (!current) return;
+      chapterLinks.forEach((link) => {
+        if (link.hash === `#${current.target.id}`)
+          link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    },
+    { rootMargin: "-18% 0px -65% 0px", threshold: 0 },
+  );
+  ["story", "memories", "letter", "cinema", "calendar"].forEach((id) => {
+    const element = document.getElementById(id);
+    if (element) chapters.observe(element);
+  });
+}
+
+// Play the Remotion postcard once when it enters view. The visitor can pause or replay.
+const postcard = document.querySelector("#motion-postcard");
+const postcardToggle = document.querySelector("[data-postcard-toggle]");
+if (postcard && postcardToggle) {
+  const updatePostcard = () => {
+    postcardToggle.textContent = postcard.ended
+      ? "Replay our postcard ↗"
+      : postcard.paused
+        ? "Play our postcard ↗"
+        : "Pause postcard Ⅱ";
+    postcardToggle.setAttribute("aria-pressed", String(!postcard.paused));
+  };
+  postcardToggle.addEventListener("click", async () => {
+    if (!postcard.paused) {
+      postcard.pause();
+      return;
+    }
+    postcardToggle.disabled = true;
+    try {
+      await postcard.play();
+    } catch {
+      postcardToggle.textContent = "Try playing again ↗";
+    } finally {
+      postcardToggle.disabled = false;
+    }
+  });
+  ["play", "pause", "ended"].forEach((event) =>
+    postcard.addEventListener(event, updatePostcard),
+  );
+  if ("IntersectionObserver" in window) {
+    let started = false;
+    const playback = new IntersectionObserver(
+      (entries) => {
+        const visible = entries[0].isIntersecting;
+        if (!visible) {
+          if (!postcard.paused) postcard.pause();
+          return;
+        }
+        if (
+          entries[0].intersectionRatio < 0.35 ||
+          started ||
+          motionPreference.matches ||
+          document.hidden
+        )
+          return;
+        started = true;
+        postcard.muted = true;
+        postcard.play().catch(updatePostcard);
+      },
+      { threshold: 0.35 },
+    );
+    playback.observe(postcard);
+  }
+  motionPreference.addEventListener("change", () => {
+    if (motionPreference.matches) postcard.pause();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) postcard.pause();
+  });
+}

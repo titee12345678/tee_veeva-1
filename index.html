@@ -1,75 +1,81 @@
 <!doctype html>
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tee & Veeva — A Little World of Our Own</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Tee &amp; Veeva — A Little World of Our Own</title>
     <meta
-      name="description"
       content="A love letter from Tee to Veeva. Our photographs, our little moments, and a story still unfolding."
+      name="description"
     />
-    <meta name="theme-color" content="#f3f0e7" />
-    <link rel="icon" href="assets/monogram.svg" type="image/svg+xml" />
+    <meta content="#f3f0e7" name="theme-color" />
+    <link href="assets/monogram.svg" rel="icon" type="image/svg+xml" />
     <link
-      rel="preload"
-      href="assets/photos/sunshine.webp"
       as="image"
       fetchpriority="high"
+      href="assets/photos/sea.webp"
+      rel="preload"
     />
-    <link rel="stylesheet" href="assets/fonts.css" />
-    <link rel="stylesheet" href="assets/style.css" />
-    <script type="module" src="assets/site.js"></script>
+    <link href="assets/fonts.css" rel="stylesheet" />
+    <link href="assets/style.css" rel="stylesheet" />
+    <script src="assets/site.js?v=one-page-2" type="module"></script>
+    <link href="assets/journal.css?v=one-page-2" rel="stylesheet" />
+    <script src="assets/calendar.js?v=one-page-2" type="module"></script>
   </head>
   <body>
     <a class="skip-link" href="#story">Skip to our story</a>
-    <header class="header header--cover">
-      <a class="wordmark" href="index.html" aria-label="Tee and Veeva, home"
+    <header class="header header--cover" data-header="">
+      <a aria-label="Tee and Veeva, home" class="wordmark" href="#top"
         >t<span>/</span>v<span class="wordmark-dot">.</span></a
       >
-      <nav class="desktop-nav" aria-label="Main navigation">
+      <nav aria-label="Main navigation" class="desktop-nav">
         <a href="#story">Our story <sup>01</sup></a>
         <a href="#memories">The moments <sup>02</sup></a>
         <a href="#letter">For you <sup>03</sup></a>
+        <a href="#cinema">In motion <sup>04</sup></a
+        ><a href="#calendar">Our dates <sup>05</sup></a>
       </nav>
       <div class="header-actions">
         <button
+          aria-label="Play our song"
+          aria-pressed="false"
           class="sound-toggle"
           type="button"
-          aria-pressed="false"
-          aria-label="Play our song"
         >
-          <span class="sound-bars" aria-hidden="true"
+          <span aria-hidden="true" class="sound-bars"
             ><i></i><i></i><i></i><i></i></span
-          ><span data-sound-label>Sound off</span>
+          ><span data-sound-label="">Sound off</span>
         </button>
         <button
+          aria-controls="mobile-nav"
+          aria-expanded="false"
           class="menu-toggle"
           type="button"
-          aria-expanded="false"
-          aria-controls="mobile-nav"
         >
           Menu <span aria-hidden="true">+</span>
         </button>
       </div>
       <nav
-        id="mobile-nav"
-        class="mobile-nav"
         aria-label="Mobile navigation"
-        hidden
+        class="mobile-nav"
+        hidden=""
+        id="mobile-nav"
       >
-        <a href="#story">Our story</a><a href="#memories">The moments</a
-        ><a href="#letter">For you</a><a href="calendar.html">Our dates</a>
+        <a href="#story">Our story</a><a href="#memories">The photographs</a
+        ><a href="#letter">For you</a><a href="#cinema">In motion</a
+        ><a href="#calendar">Our dates</a>
       </nav>
     </header>
     <main>
-      <section class="cover" aria-labelledby="cover-title">
-        <div class="cover-image" data-cover-image>
+      <section aria-labelledby="cover-title" class="cover" id="top">
+        <div class="cover-image" data-cover-image="">
           <img
-            src="assets/photos/sunshine.webp"
-            width="1350"
-            height="1800"
-            alt="Veeva hugging Tee beneath a wide blue sky"
+            alt="Tee and Veeva together beside the river, with Veeva holding a flower"
             fetchpriority="high"
+            height="1448"
+            src="assets/photos/sea.webp"
+            width="1039"
           />
         </div>
         <div class="cover-shade"></div>
@@ -79,7 +85,9 @@
             ><span>Since 24 November 2024</span>
           </div>
           <h1 id="cover-title">
-            <span>Tee <em>&</em> Veeva<span class="title-period">.</span></span>
+            <span
+              >Tee <em>&amp;</em> Veeva<span class="title-period">.</span></span
+            >
           </h1>
           <div class="cover-bottom">
             <div class="cover-note">
@@ -88,30 +96,29 @@
             </div>
             <a class="scroll-cue" href="#story"
               ><span>Our story, unfolding</span
-              ><span class="circle-arrow" aria-hidden="true">↓</span></a
+              ><span aria-hidden="true" class="circle-arrow">↓</span></a
             >
             <span class="cover-edition"
               >Two people.<br />A thousand little moments.</span
             >
           </div>
         </div>
-        <span class="cover-edge" aria-hidden="true">KEEP THIS ONE CLOSE</span>
+        <span aria-hidden="true" class="cover-edge">KEEP THIS ONE CLOSE</span>
       </section>
-
       <section
-        id="story"
-        class="story section-pad"
         aria-labelledby="story-title"
+        class="story section-pad"
+        id="story"
       >
         <div class="section-index">
           <span>01 / The beginning</span><span>Something worth keeping</span>
         </div>
         <div class="story-grid">
           <div class="story-copy">
-            <h2 id="story-title" data-reveal>
+            <h2 data-reveal="" id="story-title">
               And then,<br />there was <em>you.</em>
             </h2>
-            <div class="story-body" data-reveal>
+            <div class="story-body" data-reveal="">
               <p>
                 Ever since you came into my life, the world has felt a little
                 different. Brighter. Kinder. More like somewhere I want to be.
@@ -126,7 +133,7 @@
               >
             </div>
             <div class="story-date">
-              <span class="tiny-star" aria-hidden="true">✳</span>
+              <span aria-hidden="true" class="tiny-star">✳</span>
               <div>
                 <span class="small-label">The first page of our story</span
                 ><time datetime="2024-11-24">24 . 11 . 2024</time>
@@ -136,184 +143,468 @@
           <div class="story-photos">
             <figure class="story-photo story-photo--back" data-parallax="-0.07">
               <img
-                src="assets/photos/mirror.webp"
                 alt="A little kiss captured in a mirror selfie"
-                width="1800"
                 height="1592"
                 loading="lazy"
+                src="assets/photos/mirror.webp"
+                width="1800"
               />
               <figcaption>Just us, being us.</figcaption>
             </figure>
             <figure class="story-photo story-photo--front" data-parallax="0.08">
               <img
-                src="assets/photos/beginning.webp"
                 alt="Tee and Veeva smiling together in the sunshine"
-                width="1108"
                 height="1477"
                 loading="lazy"
+                src="assets/photos/beginning.webp"
+                width="1108"
               />
-              <figcaption>Blue skies & you. <span>01 / ∞</span></figcaption>
+              <figcaption>Blue skies &amp; you. <span>01 / ∞</span></figcaption>
             </figure>
             <span class="photo-margin-note">the good kind of ordinary</span>
           </div>
         </div>
       </section>
-
-      <section id="memories" class="memories" aria-labelledby="memories-title">
-        <div class="memories-pin">
-          <div class="memories-heading">
-            <div>
-              <span class="small-label">02 / The moments</span>
-              <h2 id="memories-title">Our kind of <em>beautiful.</em></h2>
-            </div>
-            <a class="text-link text-link--light" href="slides.html"
-              >Open the photo album <span aria-hidden="true">↗</span></a
+      <section
+        aria-labelledby="memories-title"
+        class="photo-journal section-pad"
+        id="memories"
+      >
+        <div class="section-index">
+          <span>02 / The photographs</span><span>Twelve moments to keep</span>
+        </div>
+        <div class="chapter-heading">
+          <h2 data-reveal="" id="memories-title">
+            Our kind of<br /><em>beautiful.</em>
+          </h2>
+          <p data-reveal="">
+            No grand occasion needed. Just the kind of moments I want to
+            remember, with you.
+          </p>
+        </div>
+        <div class="journal-grid">
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 0ms"
+          >
+            <button
+              aria-label="Enlarge photograph 1: By the river, with you."
+              class="photo-open"
+              data-caption="By the river, with you."
+              data-photo="assets/photos/sea.webp"
             >
-          </div>
-          <div class="film-window">
-            <div class="film-track">
-              <figure class="film-frame">
-                <button
-                  class="photo-open"
-                  data-photo="assets/photos/mirror.webp"
-                  data-caption="Just us, being us."
-                  aria-label="Enlarge the mirror selfie"
-                >
-                  <img
-                    src="assets/photos/mirror.webp"
-                    alt="Tee and Veeva together in a mirror selfie"
-                    width="1800"
-                    height="1592"
-                    loading="lazy"
-                  /><span class="photo-open-hint" aria-hidden="true"
-                    >View photograph ↗</span
-                  >
-                </button>
-                <figcaption>
-                  <span>01 — The little things</span
-                  ><span>Worth remembering</span>
-                </figcaption>
-              </figure>
-              <figure class="film-frame film-frame--portrait">
-                <button
-                  class="photo-open"
-                  data-photo="assets/photos/little-world.webp"
-                  data-caption="A little world of our own."
-                  aria-label="Enlarge the photograph with our husky"
-                >
-                  <img
-                    src="assets/photos/little-world.webp"
-                    alt="Tee and Veeva with a very fluffy husky"
-                    width="1108"
-                    height="1477"
-                    loading="lazy"
-                  /><span class="photo-open-hint" aria-hidden="true"
-                    >View photograph ↗</span
-                  >
-                </button>
-                <figcaption>
-                  <span>02 — Our little world</span
-                  ><span>A little more love</span>
-                </figcaption>
-              </figure>
-              <figure class="film-frame">
-                <button
-                  class="photo-open"
-                  data-photo="assets/photos/together.webp"
-                  data-caption="My favourite place is with you."
-                  aria-label="Enlarge the photograph of us together"
-                >
-                  <img
-                    src="assets/photos/together.webp"
-                    alt="Tee leaning close to Veeva as she smiles at the camera"
-                    width="1108"
-                    height="1477"
-                    loading="lazy"
-                  /><span class="photo-open-hint" aria-hidden="true"
-                    >View photograph ↗</span
-                  >
-                </button>
-                <figcaption>
-                  <span>03 — Better together</span><span>Always, with you</span>
-                </figcaption>
-              </figure>
-              <div class="film-end">
-                <span aria-hidden="true">∞</span>
-                <p>More moments.<br />More us.</p>
-                <a class="text-link text-link--light" href="slides.html"
-                  >See the whole album ↗</a
-                >
-              </div>
-            </div>
-          </div>
-          <div class="film-footer">
-            <span>Life looks better with you in it.</span>
-            <div class="film-progress" aria-hidden="true"><span></span></div>
-            <span class="film-instruction"
-              >Keep scrolling to turn the pages →</span
+              <img
+                alt="Tee and Veeva together by the river"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/sea.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>By the river, with you.</span><span>01 / 12</span>
+            </figcaption>
+          </figure>
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 45ms"
+          >
+            <button
+              aria-label="Enlarge photograph 2: Just us, being us."
+              class="photo-open"
+              data-caption="Just us, being us."
+              data-photo="assets/photos/mirror.webp"
             >
-          </div>
+              <img
+                alt="A little kiss in a mirror selfie"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/mirror.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>Just us, being us.</span><span>02 / 12</span>
+            </figcaption>
+          </figure>
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 90ms"
+          >
+            <button
+              aria-label="Enlarge photograph 3: Blue skies &amp; you."
+              class="photo-open"
+              data-caption="Blue skies &amp; you."
+              data-photo="assets/photos/beginning.webp"
+            >
+              <img
+                alt="Tee and Veeva smiling in the sunshine"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/beginning.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>Blue skies &amp; you.</span><span>03 / 12</span>
+            </figcaption>
+          </figure>
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 0ms"
+          >
+            <button
+              aria-label="Enlarge photograph 4: A little more love."
+              class="photo-open"
+              data-caption="A little more love."
+              data-photo="assets/photos/little-world.webp"
+            >
+              <img
+                alt="Tee and Veeva with a fluffy husky"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/little-world.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>A little more love.</span><span>04 / 12</span>
+            </figcaption>
+          </figure>
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 45ms"
+          >
+            <button
+              aria-label="Enlarge photograph 5: Better, together."
+              class="photo-open"
+              data-caption="Better, together."
+              data-photo="assets/photos/together.webp"
+            >
+              <img
+                alt="Veeva smiling with Tee beside her"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/together.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>Better, together.</span><span>05 / 12</span>
+            </figcaption>
+          </figure>
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 90ms"
+          >
+            <button
+              aria-label="Enlarge photograph 6: A pocketful of sunshine."
+              class="photo-open"
+              data-caption="A pocketful of sunshine."
+              data-photo="assets/photos/sunshine.webp"
+            >
+              <img
+                alt="A happy moment beneath the blue sky"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/sunshine.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>A pocketful of sunshine.</span><span>06 / 12</span>
+            </figcaption>
+          </figure>
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 0ms"
+          >
+            <button
+              aria-label="Enlarge photograph 7: Close to you."
+              class="photo-open"
+              data-caption="Close to you."
+              data-photo="assets/photos/evening.webp"
+            >
+              <img
+                alt="Tee and Veeva posing together in the evening"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/evening.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>Close to you.</span><span>07 / 12</span>
+            </figcaption>
+          </figure>
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 45ms"
+          >
+            <button
+              aria-label="Enlarge photograph 8: The everyday kind of happy."
+              class="photo-open"
+              data-caption="The everyday kind of happy."
+              data-photo="assets/photos/coffee.webp"
+            >
+              <img
+                alt="A cosy moment together at a cafe"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/coffee.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>The everyday kind of happy.</span><span>08 / 12</span>
+            </figcaption>
+          </figure>
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 90ms"
+          >
+            <button
+              aria-label="Enlarge photograph 9: Nothing else needed."
+              class="photo-open"
+              data-caption="Nothing else needed."
+              data-photo="assets/photos/sky.webp"
+            >
+              <img
+                alt="Tee and Veeva enjoying the sunshine"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/sky.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>Nothing else needed.</span><span>09 / 12</span>
+            </figcaption>
+          </figure>
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 0ms"
+          >
+            <button
+              aria-label="Enlarge photograph 10: You, always."
+              class="photo-open"
+              data-caption="You, always."
+              data-photo="assets/photos/you.webp"
+            >
+              <img
+                alt="Veeva looking through a round cafe window"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/you.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>You, always.</span><span>10 / 12</span>
+            </figcaption>
+          </figure>
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 45ms"
+          >
+            <button
+              aria-label="Enlarge photograph 11: Little things, big feelings."
+              class="photo-open"
+              data-caption="Little things, big feelings."
+              data-photo="assets/photos/keepsake.webp"
+            >
+              <img
+                alt="Two colourful matching keepsakes held together"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/keepsake.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>Little things, big feelings.</span><span>11 / 12</span>
+            </figcaption>
+          </figure>
+          <figure
+            class="journal-photo"
+            data-reveal=""
+            style="--reveal-delay: 90ms"
+          >
+            <button
+              aria-label="Enlarge photograph 12: A heart made for two."
+              class="photo-open"
+              data-caption="A heart made for two."
+              data-photo="assets/photos/cover.webp"
+            >
+              <img
+                alt="Tee and Veeva making a heart with their hands"
+                decoding="async"
+                height="1200"
+                loading="lazy"
+                src="assets/photos/cover.webp"
+                width="900"
+              /><span aria-hidden="true" class="photo-open-hint"
+                >View photograph ↗</span
+              >
+            </button>
+            <figcaption>
+              <span>A heart made for two.</span><span>12 / 12</span>
+            </figcaption>
+          </figure>
         </div>
       </section>
-
       <section
-        id="letter"
-        class="letter section-pad"
         aria-labelledby="letter-title"
+        class="letter section-pad"
+        id="letter"
       >
         <div class="section-index">
           <span>03 / For you</span><span>From the heart, always</span>
         </div>
         <div class="letter-layout">
           <div class="letter-side">
-            <span class="letter-stamp" aria-hidden="true"
-              >T<span>&</span>V</span
+            <span aria-hidden="true" class="letter-stamp"
+              >T<span>&amp;</span>V</span
             >
             <h2 id="letter-title">Dear Veeva,</h2>
             <p>Some things are<br />worth saying again.</p>
           </div>
           <div class="letter-content">
-            <p class="letter-words" data-letter>
+            <p class="letter-words" data-letter="">
               Whatever life brings, I want to meet it with you. On the good
               days, on the difficult days, and in all the little moments in
               between. If you ever feel alone, remember: you will always have
               me.
             </p>
-            <div class="letter-signature" data-reveal>
+            <div class="letter-signature" data-reveal="">
               <span>All my love,</span><span class="signature">Tee x</span>
             </div>
-            <button class="text-link" type="button" data-open-note>
-              One more thing for you <span aria-hidden="true">↗</span>
-            </button>
+            <div class="letter-postscript" data-reveal="">
+              <span class="small-label">A little reminder</span>
+              <h3 id="note-title">
+                You are my<br /><em>favourite person.</em>
+              </h3>
+              <p>
+                Thank you for being in this world, and for letting me be a part
+                of yours. I will keep choosing you, in all the small ways, every
+                day.
+              </p>
+              <span class="signature">Love, Tee</span>
+            </div>
           </div>
         </div>
       </section>
-
-      <section class="interlude" aria-label="A moment together">
-        <div class="interlude-photo" data-parallax="0.10">
-          <img
-            src="assets/photos/sea.webp"
-            alt="Tee and Veeva together with the open sea behind them"
-            loading="lazy"
-            width="1039"
-            height="1448"
-          />
-        </div>
-        <div class="interlude-copy">
-          <span class="small-label">No matter where life takes us</span>
-          <p>Let it be<br /><em>together.</em></p>
-        </div>
-        <span class="interlude-foot">A place. A moment. You.</span>
-      </section>
-
       <section
-        id="milestones"
-        class="milestones section-pad"
-        aria-labelledby="milestones-title"
+        aria-labelledby="cinema-title"
+        class="cinema section-pad"
+        id="cinema"
       >
         <div class="section-index">
-          <span>04 / You, me & time</span
-          ><a href="calendar.html">Our calendar ↗</a>
+          <span>04 / In motion</span><span>A moving postcard</span>
+        </div>
+        <div class="chapter-heading">
+          <h2 data-reveal="" id="cinema-title">
+            Let it be<br /><em>together.</em>
+          </h2>
+          <p data-reveal="">
+            A few seconds of us.<br />A feeling I could keep forever.
+          </p>
+        </div>
+        <figure class="motion-postcard" data-reveal="">
+          <video
+            aria-label="A twelve-second moving photo journal of Tee and Veeva"
+            controls=""
+            id="motion-postcard"
+            muted=""
+            playsinline=""
+            poster="assets/motion/poster.jpg"
+            preload="none"
+          >
+            <source src="assets/motion/our-story.mp4" type="video/mp4" />
+          </video>
+          <figcaption>
+            <span>A little world of our own.</span
+            ><button
+              aria-controls="motion-postcard"
+              class="text-link"
+              data-postcard-toggle=""
+              type="button"
+            >
+              Play our postcard <span aria-hidden="true">↗</span>
+            </button>
+          </figcaption>
+        </figure>
+        <div class="original-memory">
+          <div>
+            <span class="small-label">From our camera roll</span>
+            <h3>One more moment.<br /><em>Just as it happened.</em></h3>
+            <p>Our original video, kept here with everything else.</p>
+          </div>
+          <video
+            aria-label="Our original video memory"
+            controls=""
+            playsinline=""
+            poster="assets/photos/together.webp"
+            preload="none"
+          >
+            <source src="video/video.mp4" type="video/mp4" />
+            Your browser does not support video.
+            <a href="video/video.mp4">Download our video.</a>
+          </video>
+        </div>
+      </section>
+      <section
+        aria-labelledby="milestones-title"
+        class="milestones section-pad"
+        id="milestones"
+      >
+        <div class="section-index">
+          <span>05 / You, me &amp; time</span
+          ><a href="#calendar">Our calendar ↗</a>
         </div>
         <div class="milestones-grid">
           <div>
@@ -324,7 +615,7 @@
               Some dates stay with you.<br />Some people do, too.
             </p>
             <div class="day-counter">
-              <span data-days-together>—</span>
+              <span data-days-together="">—</span>
               <div>
                 days since our first hello<br /><time datetime="2024-11-24"
                   >24 November 2024</time
@@ -349,71 +640,138 @@
               </div>
               <span aria-hidden="true">♡</span>
             </div>
-            <a class="next-date" href="calendar.html"
+            <a class="next-date" href="#calendar"
               ><span class="small-label">The next date to keep close</span
-              ><span class="next-date-title" data-next-title
+              ><span class="next-date-title" data-next-title=""
                 >Our next special day</span
               ><span class="next-date-bottom"
-                ><span data-next-date>View our calendar</span
-                ><span data-next-days>↗</span></span
+                ><span data-next-date="">View our calendar</span
+                ><span data-next-days="">↗</span></span
               ></a
             >
           </div>
         </div>
+        <div class="inline-calendar" id="calendar">
+          <div class="calendar-intro">
+            <h2 data-reveal="" id="calendar-title">
+              Dates that<br /><em>feel like us.</em>
+            </h2>
+            <p data-reveal="">
+              The first hello. The day we became us.<br />Another birthday,
+              another reason to celebrate you.
+            </p>
+          </div>
+          <div class="calendar-layout">
+            <section aria-label="Our special dates calendar">
+              <div class="calendar-toolbar">
+                <h3
+                  aria-atomic="true"
+                  aria-live="polite"
+                  id="calendar-month"
+                ></h3>
+                <div class="calendar-controls">
+                  <button
+                    aria-label="Previous month"
+                    data-calendar-prev=""
+                    type="button"
+                  >
+                    ←</button
+                  ><button data-calendar-today="" type="button">Today</button
+                  ><button
+                    aria-label="Next month"
+                    data-calendar-next=""
+                    type="button"
+                  >
+                    →
+                  </button>
+                </div>
+              </div>
+              <div aria-hidden="true" class="weekdays">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span
+                ><span>Thu</span><span>Fri</span><span>Sat</span>
+              </div>
+              <div
+                aria-labelledby="calendar-month"
+                class="calendar-grid"
+                id="calendar-grid"
+              ></div>
+              <div class="calendar-legend">
+                <span><i aria-hidden="true"></i>A special day</span
+                ><span><i aria-hidden="true"></i>Today</span>
+              </div>
+              <div
+                aria-live="polite"
+                class="calendar-event-detail"
+                id="calendar-detail"
+              >
+                <h3>Every date has a story.</h3>
+                <p>Select a highlighted date to read a little more.</p>
+              </div>
+              <p class="calendar-timezone">
+                All dates follow Bangkok time (GMT+7).
+              </p>
+            </section>
+            <aside class="calendar-sidebar">
+              <span class="small-label">Four dates to keep close</span>
+              <h3>The ones we remember.</h3>
+              <div id="occasion-list"></div>
+              <a class="next-date" href="#calendar-month"
+                ><span class="small-label">Coming up next</span
+                ><span class="next-date-title" data-next-title=""
+                  >Our next special day</span
+                ><span class="next-date-bottom"
+                  ><span data-next-date=""></span
+                  ><span data-next-days=""></span></span
+              ></a>
+            </aside>
+          </div>
+        </div>
       </section>
-
-      <section class="closing" aria-labelledby="closing-title">
+      <section aria-labelledby="closing-title" class="closing">
         <span class="small-label">This is just the beginning</span>
         <h2 id="closing-title">Here's to<br /><em>everything ahead.</em></h2>
-        <a class="round-link" href="slides.html"
-          >Let's make more memories <span aria-hidden="true">↗</span></a
+        <a class="round-link" href="#memories"
+          >Keep our moments close <span aria-hidden="true">↗</span></a
         >
         <p>With you, every chapter is my favourite.</p>
-        <div class="closing-mark" aria-hidden="true">T <em>&</em> V</div>
+        <div aria-hidden="true" class="closing-mark">T <em>&amp;</em> V</div>
       </section>
     </main>
     <footer class="footer">
-      <a href="index.html">Tee & Veeva</a
+      <a href="#top">Tee &amp; Veeva</a
       ><span>A little corner of the internet. A whole lot of love.</span
       ><a href="#cover-title">Back to the beginning ↑</a>
     </footer>
-    <audio id="our-song" src="music/RakTae.mp3" preload="none" loop></audio>
+    <audio id="our-song" loop="" preload="none" src="music/RakTae.mp3"></audio>
     <dialog
+      aria-label="Photograph viewer"
       class="photo-dialog"
       id="photo-dialog"
-      aria-label="Photograph viewer"
     >
       <button
-        class="dialog-close"
-        data-close-dialog
         aria-label="Close photograph"
+        class="dialog-close"
+        data-close-dialog=""
       >
         Close <span aria-hidden="true">×</span>
       </button>
       <figure>
-        <img src="assets/photos/cover.webp" alt="" />
+        <img alt="" src="assets/photos/cover.webp" />
         <figcaption></figcaption>
       </figure>
       <div class="dialog-navigation">
-        <button type="button" data-photo-prev aria-label="Previous photograph">
+        <button
+          aria-label="Previous photograph"
+          data-photo-prev=""
+          type="button"
+        >
           ← Previous</button
-        ><span data-photo-position></span
-        ><button type="button" data-photo-next aria-label="Next photograph">
+        ><span data-photo-position=""></span
+        ><button aria-label="Next photograph" data-photo-next="" type="button">
           Next →
         </button>
       </div>
     </dialog>
-    <dialog class="note-dialog" id="note-dialog" aria-labelledby="note-title">
-      <button class="dialog-close" data-close-dialog aria-label="Close letter">
-        Close ×</button
-      ><span class="small-label">A little reminder</span>
-      <h2 id="note-title">You are my<br /><em>favourite person.</em></h2>
-      <p>
-        Thank you for being in this world, and for letting me be a part of
-        yours. I will keep choosing you, in all the small ways, every day.
-      </p>
-      <span class="signature">Love, Tee</span>
-    </dialog>
-    <div class="reading-progress" aria-hidden="true"></div>
+    <div aria-hidden="true" class="reading-progress"></div>
   </body>
 </html>

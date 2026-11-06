@@ -1,0 +1,1030 @@
+/* One continuous journal: fluid chapters, readable type, native vertical scrolling. */
+:root {
+  --gutter: clamp(20px, 4.4vw, 84px);
+  --body-size: 1rem;
+  --measure: 1600px;
+  --header-height: 80px;
+}
+html {
+  scroll-padding-top: calc(var(--header-height) + 20px);
+}
+body {
+  font-size: var(--body-size);
+}
+button,
+a {
+  touch-action: manipulation;
+}
+h4 {
+  margin: 0;
+  font-weight: 400;
+}
+.header {
+  position: fixed;
+  height: var(--header-height);
+  transition:
+    background 0.25s,
+    color 0.25s,
+    box-shadow 0.25s;
+}
+.header.is-scrolled {
+  color: var(--ink);
+  background: rgb(243 240 231 / 96%);
+  box-shadow: 0 1px 0 var(--line);
+  backdrop-filter: blur(12px);
+}
+.desktop-nav {
+  gap: clamp(20px, 2.5vw, 48px);
+}
+.desktop-nav a {
+  font-size: 12px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.desktop-nav a[aria-current="location"]:after {
+  transform: scaleX(1);
+  bottom: 8px;
+}
+.sound-toggle {
+  font-size: 11px;
+  min-height: 44px;
+}
+.menu-toggle {
+  min-width: 54px;
+  min-height: 44px;
+}
+.wordmark {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: baseline;
+}
+.text-link {
+  min-height: 44px;
+  font-size: 13px;
+}
+.small-label,
+.section-index {
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.1em;
+}
+.section-index > span:last-child {
+  max-width: none;
+}
+.section-index > a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  margin-top: -10px;
+}
+.cover {
+  min-height: 640px;
+}
+.cover-image {
+  inset: -6% 0;
+}
+.cover-image img {
+  object-position: 50% 58%;
+}
+.cover-shade {
+  background: linear-gradient(
+    180deg,
+    #102c46b3 0%,
+    #102c4659 29%,
+    #102c460a 55%,
+    #102c49c4 100%
+  );
+}
+.cover-content {
+  padding-top: 128px;
+}
+.cover-kicker,
+.cover-note .small-label,
+.cover-edition {
+  font-size: 12px;
+  line-height: 1.6;
+}
+.cover h1 {
+  margin-top: 22px;
+  font-size: clamp(104px, 15.8vw, 280px);
+}
+.cover-note p {
+  font-size: clamp(32px, 3vw, 48px);
+}
+.scroll-cue {
+  font-size: 12px;
+}
+.cover-edge {
+  display: none;
+}
+.section-pad {
+  padding-block: clamp(64px, 7vw, 110px);
+}
+.story-grid,
+.letter-layout,
+.milestones-grid {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+.story-body {
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 390px;
+  margin-left: 0;
+}
+.story-body .text-link {
+  font-size: 13px;
+}
+.story-date .small-label {
+  font-size: 11px;
+}
+.story-date {
+  margin-top: 42px;
+}
+.story-photos {
+  min-width: 0;
+}
+.story-photo figcaption {
+  font-size: 20px;
+}
+.story-photo figcaption span {
+  font-size: 11px;
+}
+.photo-margin-note {
+  font-size: 24px;
+}
+/* The full album is laid out in reading order. There is no nested scroll area. */
+.photo-journal {
+  background: var(--ink);
+  color: var(--paper);
+}
+.photo-journal .section-index {
+  border-color: #b6c2b447;
+}
+.chapter-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 48px;
+  padding-block: 60px 56px;
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+.chapter-heading h2 {
+  font-size: clamp(60px, 7vw, 112px);
+}
+.chapter-heading > p {
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 330px;
+}
+.photo-journal .chapter-heading > p {
+  color: #d3dbcd;
+}
+.journal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 48px 32px;
+  max-width: var(--measure);
+  margin-inline: auto;
+  align-items: start;
+}
+.journal-photo {
+  min-width: 0;
+}
+.journal-photo .photo-open {
+  display: block;
+  aspect-ratio: 4/5;
+  width: 100%;
+}
+.journal-photo img {
+  object-position: 50% 57%;
+}
+.journal-photo:first-child img {
+  object-position: 50% 67%;
+}
+.journal-photo:nth-child(3n + 2) .photo-open {
+  aspect-ratio: 3/4;
+}
+.journal-photo:nth-child(3n) .photo-open {
+  aspect-ratio: 1/1;
+}
+.journal-photo:nth-child(3n + 2) {
+  padding-top: 48px;
+}
+.journal-photo figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.journal-photo figcaption > span:last-child {
+  white-space: nowrap;
+  color: #bac8b7;
+}
+.journal-photo .photo-open-hint {
+  font-size: 12px;
+  opacity: 1;
+  transform: none;
+  left: auto;
+  right: 16px;
+  bottom: 16px;
+  padding: 10px 12px;
+  background: #f3f0e7ee;
+}
+html.motion-ready .journal-photo[data-reveal] {
+  transition-delay: var(--reveal-delay, 0ms);
+}
+/* All letter content remains in the page, including the original postscript. */
+.letter-layout {
+  padding-top: 64px;
+}
+.letter-side p,
+.letter-signature {
+  font-size: 13px;
+}
+.letter-content {
+  min-width: 0;
+}
+.letter-words {
+  font-size: clamp(38px, 4.3vw, 72px);
+}
+.letter-postscript {
+  border-top: 1px solid var(--line);
+  padding-top: 32px;
+  margin-top: 36px;
+}
+.letter-postscript h3 {
+  font: 400 clamp(38px, 4vw, 62px)/1 var(--serif);
+  letter-spacing: -0.03em;
+  margin-top: 18px;
+}
+.letter-postscript p {
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 520px;
+  margin-top: 24px;
+}
+.letter-postscript .signature {
+  display: block;
+  margin-top: 26px;
+}
+/* The Remotion render is a small, ordinary MP4; no video framework ships to visitors. */
+.cinema {
+  background: #e4e7d5;
+}
+.motion-postcard {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+.motion-postcard video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--ink);
+  object-fit: contain;
+}
+.motion-postcard figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 16px;
+  font-size: 14px;
+}
+.motion-postcard figcaption .text-link {
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.original-memory {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 8%;
+  align-items: center;
+  margin: 80px auto 0;
+  max-width: var(--measure);
+  padding-top: 48px;
+  border-top: 1px solid #283e3340;
+}
+.original-memory h3 {
+  font: 400 clamp(40px, 4vw, 66px)/1 var(--serif);
+  letter-spacing: -0.03em;
+  margin-top: 24px;
+}
+.original-memory p {
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 320px;
+  margin-top: 24px;
+}
+.original-memory video {
+  display: block;
+  width: 100%;
+  max-height: 650px;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  background: var(--ink);
+}
+.milestones-intro {
+  font-size: 16px;
+}
+.day-counter > div {
+  font-size: 13px;
+}
+.date-row h3,
+.date-row h4 {
+  font: 400 28px/1.15 var(--serif);
+}
+.date-row p {
+  font-size: 13px;
+  line-height: 1.7;
+}
+.date-number > span {
+  font-size: 11px;
+}
+.next-date .small-label {
+  font-size: 11px;
+}
+.next-date-bottom {
+  font-size: 13px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.next-date-title {
+  font-size: 34px;
+}
+/* Calendar is the next part of the same story; links land here rather than leaving. */
+.inline-calendar {
+  padding-top: 84px;
+  margin-top: 84px;
+  border-top: 1px solid var(--line);
+}
+.calendar-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 48px;
+  padding-bottom: 60px;
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+.calendar-intro h2 {
+  font-size: clamp(60px, 6.5vw, 104px);
+}
+.calendar-intro p {
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 330px;
+}
+.inline-calendar .calendar-layout {
+  padding: 0;
+  max-width: var(--measure);
+  margin-inline: auto;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 8%;
+  align-items: start;
+}
+.calendar-toolbar {
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.calendar-toolbar h3 {
+  font: 400 clamp(28px, 3vw, 40px)/1 var(--serif);
+  letter-spacing: -0.02em;
+}
+.calendar-controls {
+  gap: 8px;
+}
+.calendar-controls button {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  flex-shrink: 0;
+}
+.calendar-controls button[data-calendar-today] {
+  font-size: 12px;
+  padding-inline: 14px;
+}
+.weekdays {
+  font-size: 12px;
+}
+.calendar-cell {
+  min-height: 48px;
+  font-size: 16px;
+}
+.calendar-cell button {
+  min-width: 44px;
+  min-height: 44px;
+}
+.calendar-legend {
+  font-size: 12px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.calendar-event-detail h3 {
+  font-size: 28px;
+}
+.calendar-event-detail p,
+.calendar-timezone {
+  font-size: 13px;
+  line-height: 1.7;
+}
+.calendar-sidebar > h3 {
+  font: 400 38px/1 var(--serif);
+  margin-top: 18px;
+}
+.calendar-sidebar .date-row h4 {
+  font-size: 27px;
+}
+.calendar-sidebar .date-row {
+  min-height: 88px;
+}
+.calendar-sidebar .next-date {
+  display: flex;
+}
+.closing > .small-label,
+.closing > p {
+  font-size: 12px;
+}
+.round-link {
+  min-height: 52px;
+  font-size: 14px;
+}
+.footer {
+  font-size: 12px;
+}
+.footer a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.dialog-close,
+.dialog-navigation {
+  font-size: 14px;
+}
+.dialog-navigation button {
+  min-width: 96px;
+}
+.photo-dialog figure {
+  height: calc(85svh - 100px);
+}
+@media (min-width: 1920px) {
+  .photo-journal > .section-index,
+  .cinema > .section-index {
+    max-width: var(--measure);
+    margin-inline: auto;
+  }
+}
+@media (max-width: 1100px) {
+  .desktop-nav {
+    gap: 20px;
+  }
+  .header {
+    gap: 20px;
+  }
+  .cover-edition {
+    display: none;
+  }
+  .story-grid {
+    gap: 6%;
+  }
+  .story-body {
+    margin-left: 0;
+  }
+  .journal-grid {
+    gap: 40px 24px;
+  }
+  .inline-calendar .calendar-layout {
+    gap: 5%;
+  }
+}
+@media (max-width: 900px) {
+  .desktop-nav {
+    display: none;
+  }
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    padding: 0;
+  }
+  .menu-toggle span {
+    font-size: 24px;
+    transition: transform 0.25s;
+  }
+  .menu-toggle[aria-expanded="true"] span {
+    transform: rotate(45deg);
+  }
+  .mobile-nav {
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background: var(--paper);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    padding: 20px var(--gutter) 28px;
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .mobile-nav a {
+    font: 400 30px/1.4 var(--serif);
+    min-height: 48px;
+    padding: 6px 0;
+  }
+  .story-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-top: 48px;
+  }
+  .story-copy {
+    max-width: 650px;
+  }
+  .story-body {
+    max-width: 500px;
+  }
+  .story-photos {
+    width: min(620px, 95%);
+    min-height: 620px;
+    margin: 40px auto 0;
+  }
+  .story-photo--back {
+    width: 60%;
+    height: 360px;
+    right: 3%;
+  }
+  .story-photo--front {
+    width: 62%;
+    height: 420px;
+    top: 150px;
+    left: 3%;
+  }
+  .chapter-heading,
+  .calendar-intro {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 28px;
+    padding-top: 44px;
+    padding-bottom: 44px;
+  }
+  .chapter-heading > p,
+  .calendar-intro p {
+    max-width: 500px;
+  }
+  .journal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px 24px;
+  }
+  .journal-photo:nth-child(3n + 2) {
+    padding-top: 0;
+  }
+  .journal-photo:nth-child(2n) {
+    padding-top: 44px;
+  }
+  .journal-photo .photo-open,
+  .journal-photo:nth-child(3n + 2) .photo-open,
+  .journal-photo:nth-child(3n) .photo-open {
+    aspect-ratio: 3/4;
+  }
+  .letter-layout {
+    grid-template-columns: 1fr 2.3fr;
+    gap: 7%;
+  }
+  .letter-words {
+    font-size: 42px;
+  }
+  .milestones-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6%;
+  }
+  .milestones h2 {
+    font-size: 68px;
+  }
+  .date-row {
+    gap: 16px;
+  }
+  .date-row h3 {
+    font-size: 26px;
+  }
+  .inline-calendar .calendar-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .calendar-intro {
+    padding-top: 0;
+  }
+  .calendar-sidebar > h3 {
+    font-size: 38px;
+  }
+}
+@media (max-width: 600px) {
+  :root {
+    --gutter: 24px;
+    --header-height: 72px;
+  }
+  .header {
+    gap: 12px;
+    padding-inline: max(20px, env(safe-area-inset-left));
+  }
+  .header-actions {
+    gap: 16px;
+  }
+  .wordmark {
+    font-size: 42px;
+  }
+  .sound-toggle {
+    font-size: 11px;
+    gap: 8px;
+    min-width: 88px;
+  }
+  .menu-toggle {
+    font-size: 12px;
+    gap: 10px;
+  }
+  .cover {
+    min-height: 650px;
+    height: 100svh;
+    max-height: none;
+  }
+  .cover-content {
+    padding: 108px var(--gutter) 30px;
+  }
+  .cover-image {
+    inset: -4% -23%;
+  }
+  .cover-image img {
+    object-position: 48% 58%;
+  }
+  .cover-shade {
+    background: linear-gradient(180deg, #102c46b3, #102c4633 45%, #102c49d9);
+  }
+  .cover-kicker {
+    font-size: 10px;
+    gap: 16px;
+  }
+  .cover-kicker > span:first-child,
+  .cover-kicker > span:last-child {
+    max-width: 47%;
+  }
+  .cover h1 {
+    font-size: clamp(62px, 17.5vw, 104px);
+    text-align: left;
+    margin-top: 30px;
+    line-height: 1;
+  }
+  .cover h1 > span {
+    max-width: none;
+  }
+  .cover-bottom {
+    gap: 16px;
+  }
+  .cover-note .small-label {
+    font-size: 10px;
+  }
+  .cover-note p {
+    font-size: clamp(27px, 7.4vw, 40px);
+    margin-top: 12px;
+    max-width: 245px;
+  }
+  .scroll-cue {
+    font-size: 11px;
+    gap: 8px;
+    max-width: 115px;
+  }
+  .circle-arrow {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+  .section-pad {
+    padding-block: 60px;
+  }
+  .section-index {
+    font-size: 11px;
+    gap: 20px;
+  }
+  .section-index > span:last-child {
+    max-width: 130px;
+    text-align: right;
+  }
+  .story-copy h2 {
+    font-size: 72px;
+  }
+  .story-body {
+    font-size: 16px;
+    margin-top: 28px;
+  }
+  .story-date {
+    margin-top: 32px;
+  }
+  .story-date .small-label {
+    font-size: 10px;
+  }
+  .story-photos {
+    min-height: 480px;
+    margin-top: 32px;
+    width: 100%;
+  }
+  .story-photo--back {
+    width: 62%;
+    height: 270px;
+    right: 4%;
+  }
+  .story-photo--front {
+    width: 65%;
+    height: 320px;
+    top: 120px;
+    left: 2%;
+  }
+  .story-photo figcaption {
+    font-size: 16px;
+  }
+  .story-photo figcaption span {
+    font-size: 10px;
+  }
+  .photo-margin-note {
+    font-size: 21px;
+    right: 2%;
+  }
+  .chapter-heading h2,
+  .calendar-intro h2 {
+    font-size: clamp(56px, 14vw, 84px);
+  }
+  .journal-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .journal-photo:nth-child(2n) {
+    padding-top: 0;
+  }
+  .journal-photo .photo-open,
+  .journal-photo:nth-child(3n + 2) .photo-open,
+  .journal-photo:nth-child(3n) .photo-open {
+    aspect-ratio: 4/5;
+  }
+  .journal-photo:nth-child(3n) .photo-open {
+    aspect-ratio: 1/1;
+  }
+  .journal-photo figcaption {
+    font-size: 13px;
+    padding-top: 14px;
+  }
+  .journal-photo .photo-open-hint {
+    font-size: 12px;
+  }
+  .letter-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-top: 40px;
+  }
+  .letter-side h2 {
+    font-size: 38px;
+  }
+  .letter-side p {
+    font-size: 13px;
+    max-width: 220px;
+  }
+  .letter-words {
+    font-size: 39px;
+  }
+  .letter-signature {
+    font-size: 13px;
+  }
+  .letter-postscript h3 {
+    font-size: 42px;
+  }
+  .letter-postscript p {
+    font-size: 16px;
+  }
+  .motion-postcard {
+    margin-inline: calc(-1 * var(--gutter));
+  }
+  .motion-postcard figcaption {
+    padding-inline: var(--gutter);
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .motion-postcard figcaption .text-link {
+    font-size: 13px;
+  }
+  .original-memory {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 48px;
+    padding-top: 36px;
+  }
+  .original-memory h3 {
+    font-size: 44px;
+    margin-top: 20px;
+  }
+  .original-memory p {
+    font-size: 16px;
+    max-width: 100%;
+  }
+  .original-memory video {
+    aspect-ratio: 4/3;
+    max-height: 70svh;
+  }
+  .milestones-grid {
+    grid-template-columns: 1fr;
+    gap: 44px;
+    padding-top: 44px;
+  }
+  .milestones h2 {
+    font-size: 65px;
+  }
+  .day-counter > div {
+    font-size: 12px;
+  }
+  .day-counter > span {
+    font-size: 78px;
+  }
+  .date-row p {
+    font-size: 13px;
+  }
+  .date-row h3 {
+    font-size: 28px;
+  }
+  .next-date-title {
+    font-size: 32px;
+  }
+  .next-date-bottom {
+    font-size: 13px;
+  }
+  .inline-calendar {
+    padding-top: 52px;
+    margin-top: 52px;
+  }
+  .calendar-intro {
+    padding-bottom: 36px;
+  }
+  .calendar-toolbar h3 {
+    font-size: 30px;
+  }
+  .calendar-toolbar {
+    align-items: center;
+    justify-content: space-between;
+  }
+  .calendar-controls button {
+    width: 44px;
+    height: 44px;
+  }
+  .calendar-cell {
+    min-height: 48px;
+    font-size: 15px;
+  }
+  .calendar-cell button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .calendar-controls button[data-calendar-today] {
+    padding-inline: 12px;
+    font-size: 12px;
+  }
+  .weekdays {
+    font-size: 12px;
+  }
+  .calendar-sidebar > h3 {
+    font-size: 36px;
+  }
+  .calendar-sidebar .date-row h4 {
+    font-size: 27px;
+  }
+  .calendar-sidebar .date-number {
+    font-size: 40px;
+  }
+  .calendar-legend,
+  .calendar-timezone {
+    font-size: 12px;
+  }
+  .calendar-event-detail p {
+    font-size: 15px;
+  }
+  .calendar-event-detail h3 {
+    font-size: 28px;
+  }
+  .closing h2 {
+    font-size: clamp(55px, 15vw, 85px);
+  }
+  .closing .round-link {
+    font-size: 14px;
+  }
+  .closing > p {
+    font-size: 13px;
+    max-width: 260px;
+    margin-inline: auto;
+  }
+  .footer {
+    font-size: 12px;
+    gap: 12px;
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+  .footer > span {
+    font-size: 12px;
+    max-width: 285px;
+  }
+  .footer > a:last-child {
+    margin-left: 0;
+  }
+  .photo-dialog figure {
+    height: calc(80svh - 100px);
+  }
+  .photo-dialog figcaption {
+    font-size: 23px;
+  }
+}
+@media (max-width: 375px) {
+  .calendar-grid,
+  .weekdays {
+    margin-inline: calc(-1 * var(--gutter) + 6px);
+    width: calc(100% + 2 * var(--gutter) - 12px);
+  }
+  .cover-note p {
+    font-size: 26px;
+  }
+  .cover-bottom {
+    gap: 12px;
+  }
+  .scroll-cue > span:first-child {
+    display: none;
+  }
+  .story-copy h2 {
+    font-size: 64px;
+  }
+  .story-photo--back {
+    height: 240px;
+  }
+  .story-photo--front {
+    height: 290px;
+  }
+  .story-photos {
+    min-height: 450px;
+  }
+  .story-photo figcaption {
+    font-size: 14px;
+  }
+  .photo-margin-note {
+    font-size: 19px;
+  }
+  .letter-words {
+    font-size: 35px;
+  }
+  .calendar-controls {
+    margin-left: auto;
+  }
+}
+@media (orientation: landscape) and (max-height: 550px) {
+  .cover {
+    min-height: 600px;
+  }
+  .cover-image img {
+    object-position: center 58%;
+  }
+  .cover-content {
+    padding-top: 110px;
+  }
+  .cover h1 {
+    font-size: clamp(100px, 15vw, 160px);
+  }
+  .cover-note p {
+    font-size: 32px;
+  }
+  .photo-dialog {
+    max-height: 96svh;
+  }
+  .photo-dialog figure {
+    height: 60svh;
+  }
+  .dialog-close {
+    margin-bottom: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.motion-ready .journal-photo[data-reveal] {
+    transition-delay: 0ms;
+  }
+}
+
+/* Grid children must be allowed to shrink at the narrowest phone width. */
+.inline-calendar .calendar-layout > * {
+  min-width: 0;
+}
+.calendar-grid,
+.weekdays {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.calendar-cell {
+  min-width: 0;
+}
+.date-row > div {
+  min-width: 0;
+}
+.calendar-cell {
+  width: 100%;
+  aspect-ratio: auto;
+  height: clamp(48px, 6.5vw, 110px);
+}

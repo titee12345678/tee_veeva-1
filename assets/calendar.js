@@ -7,7 +7,7 @@ import {
   occasions,
 } from "./dates.js";
 
-const today = bangkokDate();
+let today = bangkokDate();
 let year = today.year;
 let month = today.month;
 const grid = document.querySelector("#calendar-grid");
@@ -23,6 +23,7 @@ function showOccasion(event, date) {
   detail.append(title, description);
 }
 function renderCalendar() {
+  today = bangkokDate();
   heading.textContent = formatDate(calendarDate(year, month, 1), {
     day: undefined,
   });
@@ -113,7 +114,7 @@ const list = document.querySelector("#occasion-list");
       year: undefined,
       month: "short",
     });
-    button.innerHTML = `<span class="date-number">${String(event.day).padStart(2, "0")}<span>${monthName.toUpperCase()}</span></span><div><h3>${event.name}</h3><p>${event.note}</p></div><span aria-hidden="true">↗</span>`;
+    button.innerHTML = `<span class="date-number">${String(event.day).padStart(2, "0")}<span>${monthName.toUpperCase()}</span></span><div><h4>${event.name}</h4><p>${event.note}</p></div><span aria-hidden="true">↗</span>`;
     button.addEventListener("click", () => {
       year = today.year;
       month = event.month;
@@ -134,20 +135,23 @@ const list = document.querySelector("#occasion-list");
   });
 renderCalendar();
 
-document
-  .querySelector(".calendar-sidebar .next-date")
-  .addEventListener("click", (event) => {
+document.querySelectorAll(".next-date").forEach((link) =>
+  link.addEventListener("click", (event) => {
     event.preventDefault();
     const next = nextOccasion();
+    if (location.hash !== "#calendar") history.pushState(null, "", "#calendar");
     const nextDate = bangkokDate(next.date);
     year = nextDate.year;
     month = nextDate.month;
     renderCalendar();
     showOccasion(next, next.date);
+    heading.setAttribute("tabindex", "-1");
+    heading.focus({ preventScroll: true });
     heading.scrollIntoView({
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
         ? "instant"
         : "smooth",
       block: "start",
     });
-  });
+  }),
+);
