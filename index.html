@@ -1,1199 +1,419 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>จากใจตี๋ถึงวีวา</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sriracha&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="premium.css">
-    <link rel="stylesheet" href="enhanced.css">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #fff0f3 0%, #ffb3c1 50%, #ff95a8 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Sriracha', cursive;
-            overflow: hidden;
-            position: relative;
-            animation: gradientShift 15s ease infinite;
-            background-size: 200% 200%;
-        }
-        
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        
-        .audio-controls {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            padding: 10px;
-            border-radius: 50px;
-            box-shadow: 0 5px 15px rgba(255, 71, 120, 0.3);
-        }
-
-        .audio-toggle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: linear-gradient(45deg, #FF4778, #FF95A8);
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 5px 10px rgba(255, 71, 120, 0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .audio-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 15px rgba(255, 71, 120, 0.5);
-        }
-
-        .volume-slider {
-            width: 100px;
-            -webkit-appearance: none;
-            appearance: none;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
-            outline: none;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: #FF4778;
-            cursor: pointer;
-            box-shadow: 0 0 5px rgba(255, 71, 120, 0.5);
-        }
-
-        .volume-slider::-moz-range-thumb {
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: #FF4778;
-            cursor: pointer;
-            box-shadow: 0 0 5px rgba(255, 71, 120, 0.5);
-            border: none;
-        }
-
-       
-        .heart-frame {
-            position: absolute;
-            width: 100vw;
-            height: 100vh;
-            z-index: 2;
-            opacity: 0.15;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF6B8B" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: 80% auto;
-            pointer-events: none;
-        }
-
-        
-        .container {
-            position: relative;
-            width: 90%;
-            max-width: 600px;
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-
-       
-        .slide {
-            position: absolute;
-            width: 90%;
-            max-width: 580px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            transition: opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 10;
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            color: #FF4778;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8),
-                         0 0 30px #FF9999,
-                         2px 2px 5px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            border-radius: 30px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15));
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 20px 40px rgba(255, 71, 120, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .slide.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-      
-        .slide img {
-            max-width: 100%;
-            max-height: 40vh;
-            border-radius: 20px;
-            margin-top: 20px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25), 0 0 30px rgba(255, 71, 120, 0.2);
-            border: 6px solid white;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease;
-            object-fit: cover;
-        }
-
-        .slide img:hover {
-            transform: scale(1.05);
-        }
-
-       
-        .love-button {
-            font-family: 'Prompt', sans-serif;
-            font-weight: 700;
-            position: relative;
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-            padding: 16px 48px;
-            border: none;
-            border-radius: 50px;
-            background: linear-gradient(135deg, #FF4778, #FF95A8);
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 15px 35px rgba(255, 71, 120, 0.4),
-                        0 0 20px rgba(255, 71, 120, 0.6),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 50;
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        .love-button.active {
-            animation: fadeInUp 1s forwards;
-        }
-
-        .love-button:hover {
-            transform: translateY(-8px) scale(1.08);
-            box-shadow: 0 25px 50px rgba(255, 71, 120, 0.5),
-                        0 0 30px rgba(255, 71, 120, 0.7),
-                        0 0 60px rgba(255, 255, 255, 0.5);
-        }
-
-        .love-button:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        .love-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-
-        .love-button:hover::before {
-            left: 100%;
-        }
-
-      
-        .response-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            background: radial-gradient(circle, rgba(255, 200, 210, 0.9), rgba(255, 150, 170, 0.95));
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .response-container.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .response-message {
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            color: white;
-            text-shadow: 2px 2px 10px rgba(255, 71, 120, 0.6);
-            text-align: center;
-            margin-bottom: 30px;
-            animation: pulse 2s infinite;
-        }
-
-        .response-buttons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .response-button {
-            font-family: 'Prompt', sans-serif;
-            font-size: clamp(1rem, 3vw, 1.3rem);
-            padding: 15px 40px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .yes-button {
-            background: linear-gradient(45deg, #FF4778, #FF95A8);
-            color: white;
-            box-shadow: 0 10px 20px rgba(255, 71, 120, 0.4);
-        }
-
-        .no-button {
-            background: white;
-            color: #FF4778;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .response-button:hover {
-            transform: translateY(-5px);
-        }
-
-        
-        .heart-burst {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 200;
-            opacity: 0;
-        }
-
-        .heart-burst.active {
-            opacity: 1;
-        }
-
-        
-        .floating-heart {
-            position: absolute;
-            width: clamp(15px, 3vw, 30px);
-            height: clamp(15px, 3vw, 30px);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF6B8B" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>');
-            background-repeat: no-repeat;
-            background-size: contain;
-            opacity: 0.7;
-            z-index: 2;
-            animation: floatUpHeart 15s linear infinite;
-        }
-
-        @keyframes floatUpHeart {
-            0% { transform: translateY(100vh) scale(1) rotate(0deg); opacity: 0.7; }
-            50% { opacity: 0.9; }
-            100% { transform: translateY(-20vh) scale(0.5) rotate(360deg); opacity: 0; }
-        }
-
-        
-        .balloon {
-            position: absolute;
-            width: clamp(30px, 5vw, 50px);
-            height: clamp(40px, 6vw, 60px);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            background: linear-gradient(135deg, #FF95A8, #FF4778);
-            box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.3),
-                        0 10px 20px rgba(0, 0, 0, 0.2);
-            animation: floatUpBalloon 20s linear infinite;
-            z-index: 3;
-        }
-
-        .balloon::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            width: 1px;
-            height: 20px;
-            background: #FF4778;
-            transform: translateX(-50%);
-        }
-
-        .balloon::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 15%;
-            width: 15%;
-            height: 10%;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 50%;
-        }
-
-        @keyframes floatUpBalloon {
-            0% { transform: translateY(120vh) translateX(0) rotate(5deg); opacity: 0.8; }
-            50% { transform: translateY(50vh) translateX(clamp(-50px, -10vw, -20px)) rotate(-10deg); opacity: 1; }
-            100% { transform: translateY(-20vh) translateX(clamp(50px, 10vw, 20px)) rotate(5deg); opacity: 0; }
-        }
-
-        
-        .sparkle {
-            position: absolute;
-            width: clamp(5px, 1vw, 10px);
-            height: clamp(5px, 1vw, 10px);
-            background: white;
-            border-radius: 50%;
-            animation: sparkle 4s infinite ease-in-out;
-            z-index: 1;
-        }
-
-        @keyframes sparkle {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1); opacity: 1; filter: blur(1px); }
-            100% { transform: scale(0); opacity: 0; }
-        }
-
-       
-        .star {
-            position: absolute;
-            width: clamp(8px, 1.5vw, 15px);
-            height: clamp(8px, 1.5vw, 15px);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 48"><path fill="%23FFD1DC" d="M25.5,0 L33.1,15.2 L51,17.7 L38.2,29.8 L41.3,48 L25.5,39.8 L9.7,48 L12.7,29.8 L0,17.7 L17.8,15.2 Z"/></svg>');
-            background-repeat: no-repeat;
-            background-size: contain;
-            animation: twinkle 5s infinite ease-in-out;
-            z-index: 2;
-        }
-
-        @keyframes twinkle {
-            0% { transform: scale(1) rotate(0deg); opacity: 0.3; }
-            50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
-            100% { transform: scale(1) rotate(360deg); opacity: 0.3; }
-        }
-
-        
-        .butterfly {
-            position: absolute;
-            width: clamp(20px, 4vw, 30px);
-            height: clamp(20px, 4vw, 30px);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF95A8" d="M50,35 C60,5 90,15 80,40 C90,65 60,75 50,45 C40,75 10,65 20,40 C10,15 40,5 50,35 Z"/><circle fill="%23FF4778" cx="50" cy="40" r="5"/></svg>');
-            background-repeat: no-repeat;
-            background-size: contain;
-            z-index: 3;
-            animation: flyButterfly 15s linear infinite;
-        }
-
-        @keyframes flyButterfly {
-            0% { transform: translateX(-20vw) translateY(50vh) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 1; }
-            25% { transform: translateX(0vw) translateY(30vh) rotate(10deg) scale(1); }
-            50% { transform: translateX(20vw) translateY(40vh) rotate(-10deg) scale(0.9); }
-            75% { transform: translateX(40vw) translateY(20vh) rotate(10deg) scale(1.1); }
-            90% { opacity: 1; }
-            100% { transform: translateX(120vw) translateY(10vh) rotate(0deg) scale(0.8); opacity: 0; }
-        }
-
-        .bubble {
-            position: absolute;
-            width: clamp(10px, 3vw, 30px);
-            height: clamp(10px, 3vw, 30px);
-            border-radius: 50%;
-            background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.8), rgba(255, 200, 210, 0.4));
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.8),
-                        0 0 10px rgba(255, 71, 120, 0.3);
-            animation: floatBubble 10s linear infinite;
-            z-index: 2;
-        }
-
-        @keyframes floatBubble {
-            0% { transform: translateY(100vh) translateX(0) scale(0.5); opacity: 0.7; }
-            50% { transform: translateY(50vh) translateX(clamp(20px, 5vw, 40px)) scale(1); opacity: 0.8; }
-            100% { transform: translateY(0vh) translateX(clamp(-20px, -5vw, -40px)) scale(0.5); opacity: 0; }
-        }
-
-        
-        .petal {
-            position: absolute;
-            width: clamp(10px, 2vw, 20px);
-            height: clamp(15px, 3vw, 30px);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FFB6C1" d="M50,0 C30,30 0,50 50,100 C100,50 70,30 50,0 Z"/></svg>');
-            background-repeat: no-repeat;
-            background-size: contain;
-            opacity: 0.7;
-            z-index: 2;
-            animation: fallPetal 12s linear infinite;
-        }
-
-        @keyframes fallPetal {
-            0% { transform: translateY(-10vh) translateX(-10vw) rotate(0deg); opacity: 0.7; }
-            50% { transform: translateY(50vh) translateX(5vw) rotate(180deg); opacity: 0.9; }
-            100% { transform: translateY(110vh) translateX(-5vw) rotate(360deg); opacity: 0.7; }
-        }
-
-        /* ลูกเล่นที่ 8: แสงกระจายรอบตัว */
-        .glow {
-            position: absolute;
-            width: clamp(100px, 20vw, 200px);
-            height: clamp(100px, 20vw, 200px);
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent 70%);
-            border-radius: 50%;
-            animation: glow 6s infinite ease-in-out;
-            z-index: 1;
-        }
-
-        @keyframes glow {
-            0% { transform: scale(0.8); opacity: 0.3; }
-            50% { transform: scale(1.2); opacity: 0.6; }
-            100% { transform: scale(0.8); opacity: 0.3; }
-        }
-
-      
-        .shooting-star {
-            position: absolute;
-            width: 2px;
-            height: clamp(50px, 10vw, 100px);
-            background: linear-gradient(to bottom, white, transparent);
-            opacity: 0;
-            z-index: 2;
-            animation: shootingStar 5s linear infinite;
-        }
-
-        @keyframes shootingStar {
-            0% { transform: translateX(0) translateY(0) rotate(45deg); opacity: 0; }
-            1% { opacity: 1; }
-            10% { transform: translateX(clamp(100px, 20vw, 200px)) translateY(clamp(100px, 20vw, 200px)) rotate(45deg); opacity: 0; }
-            100% { transform: translateX(clamp(100px, 20vw, 200px)) translateY(clamp(100px, 20vw, 200px)) rotate(45deg); opacity: 0; }
-        }
-
-        .wave {
-            position: absolute;
-            width: 100%;
-            height: 100px;
-            bottom: -50px;
-            left: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path fill="%23FFB6C1" opacity="0.5" d="M0,0 C150,90 350,0 500,100 C650,200 850,110 1200,0 L1200,120 L0,120 Z"></path></svg>') repeat-x;
-            background-size: clamp(300px, 50vw, 600px) 100px;
-            animation: waveMove 10s linear infinite;
-            z-index: 1;
-        }
-
-        @keyframes waveMove {
-            0% { background-position-x: 0; }
-            100% { background-position-x: clamp(300px, 50vw, 600px); }
-        }
-
-        .ribbon {
-            position: absolute;
-            width: clamp(50px, 10vw, 100px);
-            height: clamp(5px, 1vw, 10px);
-            background: #FF4778;
-            opacity: 0.6;
-            animation: ribbonFloat 8s linear infinite;
-            z-index: 2;
-        }
-
-        @keyframes ribbonFloat {
-            0% { transform: translateX(-20vw) translateY(110vh) rotate(0deg); opacity: 0.6; }
-            50% { transform: translateX(60vw) translateY(50vh) rotate(360deg); opacity: 0.8; }
-            100% { transform: translateX(120vw) translateY(-10vh) rotate(720deg); opacity: 0.6; }
-        }
-
-        .snowflake {
-            position: absolute;
-            width: clamp(10px, 2vw, 20px);
-            height: clamp(10px, 2vw, 20px);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FFF" d="M50,0 L50,100 M0,50 L100,50 M15,15 L85,85 M15,85 L85,15"/></svg>');
-            background-repeat: no-repeat;
-            background-size: contain;
-            opacity: 0.7;
-            z-index: 2;
-            animation: snowFall 15s linear infinite;
-        }
-
-        @keyframes snowFall {
-            0% { transform: translateY(-10vh) translateX(-10vw) rotate(0deg); opacity: 0.7; }
-            50% { transform: translateY(50vh) translateX(5vw) rotate(180deg); opacity: 0.9; }
-            100% { transform: translateY(110vh) translateX(-5vw) rotate(360deg); opacity: 0.7; }
-        }
-
-        .smoke {
-            position: absolute;
-            width: clamp(30px, 5vw, 50px);
-            height: clamp(30px, 5vw, 50px);
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 1;
-            animation: smokeRise 6s linear infinite;
-        }
-
-        @keyframes smokeRise {
-            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-            10% { opacity: 0.7; }
-            50% { transform: translateY(50vh) scale(1.5); opacity: 0.4; }
-            100% { transform: translateY(0vh) scale(3); opacity: 0; }
-        }
-
-     
-        .ripple {
-            position: absolute;
-            width: clamp(10px, 2vw, 20px);
-            height: clamp(10px, 2vw, 20px);
-            border: 2px solid rgba(255, 71, 120, 0.5);
-            border-radius: 50%;
-            animation: rippleEffect 4s linear infinite;
-            z-index: 2;
-        }
-
-        @keyframes rippleEffect {
-            0% { transform: scale(0); opacity: 1; }
-            100% { transform: scale(5); opacity: 0; }
-        }
-
-        .dice {
-            position: absolute;
-            width: clamp(20px, 4vw, 40px);
-            height: clamp(20px, 4vw, 40px);
-            background: #FFB6C1;
-            border-radius: 10%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            animation: diceRoll 10s linear infinite;
-            z-index: 3;
-        }
-
-        .dice::before {
-            content: "♥";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: clamp(10px, 2vw, 20px);
-            color: #FF4778;
-        }
-
-        @keyframes diceRoll {
-            0% { transform: translateY(100vh) translateX(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg); opacity: 0.8; }
-            50% { transform: translateY(50vh) translateX(20vw) rotateX(180deg) rotateY(360deg) rotateZ(180deg); opacity: 1; }
-            100% { transform: translateY(0vh) translateX(0) rotateX(360deg) rotateY(720deg) rotateZ(360deg); opacity: 0; }
-        }
-
-       
-        .firework {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #FF4778;
-            opacity: 0;
-            z-index: 3;
-        }
-
-        .firework.ready {
-            animation: fireworkLaunch 2s forwards;
-        }
-
-        @keyframes fireworkLaunch {
-            0% { transform: translateY(100vh); opacity: 1; }
-            70% { transform: translateY(30vh); opacity: 1; }
-            100% { transform: translateY(30vh); opacity: 0; }
-        }
-
-        .dust {
-            position: absolute;
-            width: clamp(3px, 0.5vw, 5px);
-            height: clamp(3px, 0.5vw, 5px);
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 2;
-        }
-
-        .dust.active {
-            animation: dustSpreading 2s forwards;
-        }
-
-        @keyframes dustSpreading {
-            0% { transform: scale(0); opacity: 0; }
-            10% { opacity: 0.8; }
-            100% { transform: scale(20) translateY(-20px); opacity: 0; }
-        }
-
-        .cake {
-            position: absolute;
-            width: clamp(40px, 8vw, 80px);
-            height: clamp(30px, 6vw, 60px);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80"><rect fill="%23FFB6C1" x="10" y="40" width="80" height="40" rx="5" /><rect fill="%23FF95A8" x="20" y="20" width="60" height="20" rx="5" /><rect fill="%23FF4778" x="40" y="10" width="20" height="10" rx="3" /><circle fill="%23FFDF00" cx="50" cy="5" r="5"/></svg>');
-            background-repeat: no-repeat;
-            background-size: contain;
-            z-index: 3;
-            animation: cakeFloat 15s ease-in-out infinite alternate;
-        }
-
-        @keyframes cakeFloat {
-            0% { transform: translateY(110vh) rotate(-5deg); opacity: 0; }
-            10% { opacity: 1; }
-            50% { transform: translateY(50vh) rotate(5deg); }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(-5deg); opacity: 0; }
-        }
-
-       
-        .moon {
-            position: absolute;
-            width: clamp(30px, 6vw, 60px);
-            height: clamp(30px, 6vw, 60px);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle fill="%23FFF9C4" cx="50" cy="50" r="40"/><circle fill="%23FFC1CC" cx="30" cy="30" r="10"/><circle fill="%23FFC1CC" cx="70" cy="40" r="8"/><circle fill="%23FFC1CC" cx="40" cy="70" r="12"/></svg>');
-            background-repeat: no-repeat;
-            background-size: contain;
-            z-index: 2;
-            opacity: 0.8;
-            animation: moonMove 30s linear infinite alternate;
-        }
-
-        @keyframes moonMove {
-            0% { transform: translateX(-20vw) translateY(80vh) rotate(0deg); }
-            100% { transform: translateX(120vw) translateY(10vh) rotate(360deg); }
-        }
-
-       
-        .rainbow {
-            position: absolute;
-            width: clamp(200px, 40vw, 400px);
-            height: clamp(100px, 20vw, 200px);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><path fill="none" stroke="%23FF4778" stroke-width="10" d="M0,100 C70,0 130,0 200,100" /></svg>');
-            background-repeat: no-repeat;
-            background-size: contain;
-            opacity: 0.5;
-            z-index: 1;
-            animation: rainbowFade 10s ease-in-out infinite alternate;
-        }
-
-        @keyframes rainbowFade {
-            0% { opacity: 0.3; transform: translateY(50vh) scale(0.8); }
-            100% { opacity: 0.7; transform: translateY(20vh) scale(1.2); }
-        }
-
-      
-        .spinning-heart {
-            position: absolute;
-            width: clamp(20px, 4vw, 40px);
-            height: clamp(20px, 4vw, 40px);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF4778" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>');
-            background-repeat: no-repeat;
-            background-size: contain;
-            animation: heartSpin 8s linear infinite;
-            z-index: 3;
-        }
-
-        @keyframes heartSpin {
-            0% { transform: rotate(0deg) translateX(clamp(20px, 5vw, 50px)) rotate(0deg); opacity: 0.7; }
-            100% { transform: rotate(360deg) translateX(clamp(20px, 5vw, 50px)) rotate(-360deg); opacity: 0.7; }
-        }
-
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(50px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-       
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-       
-        @keyframes heartBurst {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.5); opacity: 1; }
-            100% { transform: scale(2); opacity: 0; }
-        }
-
-        @media (max-width: 768px) {
-            .slide {
-                width: 95%;
-                padding: 15px;
-            }
-            
-            .response-message {
-                padding: 0 20px;
-            }
-            
-            .response-buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
-        }
-
-        @media (max-height: 600px) {
-            .container {
-                height: 90vh;
-            }
-            
-            .slide img {
-                max-height: 30vh;
-            }
-        }
-        .audio-controls {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    
-    <audio id="bgMusic" autoplay loop preload="auto">
-        <source src="music/RakTae.mp3" type="audio/mpeg">
-    </audio>
-    
-    
-    <div class="audio-controls">
-        <button class="audio-toggle" id="audioToggle">♪</button>
-        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
-    </div>
-
-    <div class="heart-frame"></div>
-    <div class="container reveal">
-        
-        <div class="slide" id="slide1">ตั้งแต่รู้จักกับวีวา</div>
-        <div class="slide" id="slide2">
-            โลกของตี๋ก็เปลี่ยนไป
-            <img src="images/cup2.jpg" alt="รูปคู่ของตี๋และวีวา" />
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tee & Veeva — A Little World of Our Own</title>
+    <meta
+      name="description"
+      content="A love letter from Tee to Veeva. Our photographs, our little moments, and a story still unfolding."
+    />
+    <meta name="theme-color" content="#f3f0e7" />
+    <link rel="icon" href="assets/monogram.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="assets/photos/sunshine.webp"
+      as="image"
+      fetchpriority="high"
+    />
+    <link rel="stylesheet" href="assets/fonts.css" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script type="module" src="assets/site.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#story">Skip to our story</a>
+    <header class="header header--cover">
+      <a class="wordmark" href="index.html" aria-label="Tee and Veeva, home"
+        >t<span>/</span>v<span class="wordmark-dot">.</span></a
+      >
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#story">Our story <sup>01</sup></a>
+        <a href="#memories">The moments <sup>02</sup></a>
+        <a href="#letter">For you <sup>03</sup></a>
+      </nav>
+      <div class="header-actions">
+        <button
+          class="sound-toggle"
+          type="button"
+          aria-pressed="false"
+          aria-label="Play our song"
+        >
+          <span class="sound-bars" aria-hidden="true"
+            ><i></i><i></i><i></i><i></i></span
+          ><span data-sound-label>Sound off</span>
+        </button>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+        >
+          Menu <span aria-hidden="true">+</span>
+        </button>
+      </div>
+      <nav
+        id="mobile-nav"
+        class="mobile-nav"
+        aria-label="Mobile navigation"
+        hidden
+      >
+        <a href="#story">Our story</a><a href="#memories">The moments</a
+        ><a href="#letter">For you</a><a href="calendar.html">Our dates</a>
+      </nav>
+    </header>
+    <main>
+      <section class="cover" aria-labelledby="cover-title">
+        <div class="cover-image" data-cover-image>
+          <img
+            src="assets/photos/sunshine.webp"
+            width="1350"
+            height="1800"
+            alt="Veeva hugging Tee beneath a wide blue sky"
+            fetchpriority="high"
+          />
         </div>
-        <div class="slide" id="slide3">วีวาเป็นพลังบวกให้กับตี๋</div>
-        <div class="slide" id="slide4">
-            ความน่ารักสดใสของวีวาทำให้ตี๋ยิ้มได้เสมอ<br/>
+        <div class="cover-shade"></div>
+        <div class="cover-content">
+          <div class="cover-kicker">
+            <span>A little world of our own</span
+            ><span>Since 24 November 2024</span>
+          </div>
+          <h1 id="cover-title">
+            <span>Tee <em>&</em> Veeva<span class="title-period">.</span></span>
+          </h1>
+          <div class="cover-bottom">
+            <div class="cover-note">
+              <span class="small-label">A love letter, by Tee</span>
+              <p>Of all the places,<br />my favourite is <em>with you.</em></p>
+            </div>
+            <a class="scroll-cue" href="#story"
+              ><span>Our story, unfolding</span
+              ><span class="circle-arrow" aria-hidden="true">↓</span></a
+            >
+            <span class="cover-edition"
+              >Two people.<br />A thousand little moments.</span
+            >
+          </div>
         </div>
-        <div class="slide" id="slide5">
-            ทุกครั้งที่อยู่ด้วยกัน<br/>
-            ตี๋มีความสุขมาก
-            <img src="images/32.jpg" alt="รูปคู่ของตี๋และวีวา" />
+        <span class="cover-edge" aria-hidden="true">KEEP THIS ONE CLOSE</span>
+      </section>
+
+      <section
+        id="story"
+        class="story section-pad"
+        aria-labelledby="story-title"
+      >
+        <div class="section-index">
+          <span>01 / The beginning</span><span>Something worth keeping</span>
         </div>
-        <div class="slide" id="slide6">
-            ไม่ว่าจะเจออะไรในชีวิต<br/>
-            ตี๋อยากเจอมันไปพร้อมกับวีวานะ
+        <div class="story-grid">
+          <div class="story-copy">
+            <h2 id="story-title" data-reveal>
+              And then,<br />there was <em>you.</em>
+            </h2>
+            <div class="story-body" data-reveal>
+              <p>
+                Ever since you came into my life, the world has felt a little
+                different. Brighter. Kinder. More like somewhere I want to be.
+              </p>
+              <p>
+                Your smile still does that to me. The ordinary days, the quiet
+                moments, just being together — they mean more than you know.
+              </p>
+              <a class="text-link" href="#letter"
+                >A few things I want you to know
+                <span aria-hidden="true">↗</span></a
+              >
+            </div>
+            <div class="story-date">
+              <span class="tiny-star" aria-hidden="true">✳</span>
+              <div>
+                <span class="small-label">The first page of our story</span
+                ><time datetime="2024-11-24">24 . 11 . 2024</time>
+              </div>
+            </div>
+          </div>
+          <div class="story-photos">
+            <figure class="story-photo story-photo--back" data-parallax="-0.07">
+              <img
+                src="assets/photos/mirror.webp"
+                alt="A little kiss captured in a mirror selfie"
+                width="1800"
+                height="1592"
+                loading="lazy"
+              />
+              <figcaption>Just us, being us.</figcaption>
+            </figure>
+            <figure class="story-photo story-photo--front" data-parallax="0.08">
+              <img
+                src="assets/photos/beginning.webp"
+                alt="Tee and Veeva smiling together in the sunshine"
+                width="1108"
+                height="1477"
+                loading="lazy"
+              />
+              <figcaption>Blue skies & you. <span>01 / ∞</span></figcaption>
+            </figure>
+            <span class="photo-margin-note">the good kind of ordinary</span>
+          </div>
         </div>
-        <div class="slide" id="slide7">
-         ทุกเส้นทางจะมีความหมายถ้ามีวีวาร่วมเดินไปด้วยกัน
+      </section>
+
+      <section id="memories" class="memories" aria-labelledby="memories-title">
+        <div class="memories-pin">
+          <div class="memories-heading">
+            <div>
+              <span class="small-label">02 / The moments</span>
+              <h2 id="memories-title">Our kind of <em>beautiful.</em></h2>
+            </div>
+            <a class="text-link text-link--light" href="slides.html"
+              >Open the photo album <span aria-hidden="true">↗</span></a
+            >
+          </div>
+          <div class="film-window">
+            <div class="film-track">
+              <figure class="film-frame">
+                <button
+                  class="photo-open"
+                  data-photo="assets/photos/mirror.webp"
+                  data-caption="Just us, being us."
+                  aria-label="Enlarge the mirror selfie"
+                >
+                  <img
+                    src="assets/photos/mirror.webp"
+                    alt="Tee and Veeva together in a mirror selfie"
+                    width="1800"
+                    height="1592"
+                    loading="lazy"
+                  /><span class="photo-open-hint" aria-hidden="true"
+                    >View photograph ↗</span
+                  >
+                </button>
+                <figcaption>
+                  <span>01 — The little things</span
+                  ><span>Worth remembering</span>
+                </figcaption>
+              </figure>
+              <figure class="film-frame film-frame--portrait">
+                <button
+                  class="photo-open"
+                  data-photo="assets/photos/little-world.webp"
+                  data-caption="A little world of our own."
+                  aria-label="Enlarge the photograph with our husky"
+                >
+                  <img
+                    src="assets/photos/little-world.webp"
+                    alt="Tee and Veeva with a very fluffy husky"
+                    width="1108"
+                    height="1477"
+                    loading="lazy"
+                  /><span class="photo-open-hint" aria-hidden="true"
+                    >View photograph ↗</span
+                  >
+                </button>
+                <figcaption>
+                  <span>02 — Our little world</span
+                  ><span>A little more love</span>
+                </figcaption>
+              </figure>
+              <figure class="film-frame">
+                <button
+                  class="photo-open"
+                  data-photo="assets/photos/together.webp"
+                  data-caption="My favourite place is with you."
+                  aria-label="Enlarge the photograph of us together"
+                >
+                  <img
+                    src="assets/photos/together.webp"
+                    alt="Tee leaning close to Veeva as she smiles at the camera"
+                    width="1108"
+                    height="1477"
+                    loading="lazy"
+                  /><span class="photo-open-hint" aria-hidden="true"
+                    >View photograph ↗</span
+                  >
+                </button>
+                <figcaption>
+                  <span>03 — Better together</span><span>Always, with you</span>
+                </figcaption>
+              </figure>
+              <div class="film-end">
+                <span aria-hidden="true">∞</span>
+                <p>More moments.<br />More us.</p>
+                <a class="text-link text-link--light" href="slides.html"
+                  >See the whole album ↗</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="film-footer">
+            <span>Life looks better with you in it.</span>
+            <div class="film-progress" aria-hidden="true"><span></span></div>
+            <span class="film-instruction"
+              >Keep scrolling to turn the pages →</span
+            >
+          </div>
         </div>
-        <div class="slide" id="slide8">
-            ในหัวใจของตี๋มีวีวาเพียงคนเดียวและจะเป็นแบบนี้ตลอดไป<br/>
-            <img src="images/29.jpg" alt="รูปคู่ของตี๋และวีวา" />
+      </section>
+
+      <section
+        id="letter"
+        class="letter section-pad"
+        aria-labelledby="letter-title"
+      >
+        <div class="section-index">
+          <span>03 / For you</span><span>From the heart, always</span>
         </div>
-        <div class="slide" id="slide9">
-            ทุกครั้งที่วีวารู้สึกโดดเดียวไม่รู้จะหันไปทางไหนให้จำไว้ว่าวีวายังมีตี๋เสมอนะ
+        <div class="letter-layout">
+          <div class="letter-side">
+            <span class="letter-stamp" aria-hidden="true"
+              >T<span>&</span>V</span
+            >
+            <h2 id="letter-title">Dear Veeva,</h2>
+            <p>Some things are<br />worth saying again.</p>
+          </div>
+          <div class="letter-content">
+            <p class="letter-words" data-letter>
+              Whatever life brings, I want to meet it with you. On the good
+              days, on the difficult days, and in all the little moments in
+              between. If you ever feel alone, remember: you will always have
+              me.
+            </p>
+            <div class="letter-signature" data-reveal>
+              <span>All my love,</span><span class="signature">Tee x</span>
+            </div>
+            <button class="text-link" type="button" data-open-note>
+              One more thing for you <span aria-hidden="true">↗</span>
+            </button>
+          </div>
         </div>
-        <div class="slide" id="slide10">
-            ตี๋จะทำทุกอย่างเพื่อให้วีวามีความสุข 
+      </section>
+
+      <section class="interlude" aria-label="A moment together">
+        <div class="interlude-photo" data-parallax="0.10">
+          <img
+            src="assets/photos/sea.webp"
+            alt="Tee and Veeva together with the open sea behind them"
+            loading="lazy"
+            width="1039"
+            height="1448"
+          />
         </div>
-
-        
-        <button class="love-button" id="loveButton">อยากไปกันต่อไหม ?</button>
-    </div>
-
-    
-    <div class="response-container" id="responseContainer">
-        
-        <div class="response-buttons">
-            <button class="response-button yes-button" id="yesButton">ไปต่อ ♥</button>
-            <button class="response-button no-button" id="noButton" style="font-weight: bold; color: white;">ขอคิดดูก่อน</button>
+        <div class="interlude-copy">
+          <span class="small-label">No matter where life takes us</span>
+          <p>Let it be<br /><em>together.</em></p>
         </div>
-        <div style="margin-top: 30px;">
-            <a href="slides.html" class="btn-premium" style="font-size: 1.1rem; padding: 12px 30px; text-decoration: none;">✨ ดูสไลด์ความทรงจำสุดพิเศษ ✨</a>
+        <span class="interlude-foot">A place. A moment. You.</span>
+      </section>
+
+      <section
+        id="milestones"
+        class="milestones section-pad"
+        aria-labelledby="milestones-title"
+      >
+        <div class="section-index">
+          <span>04 / You, me & time</span
+          ><a href="calendar.html">Our calendar ↗</a>
         </div>
-    </div>
+        <div class="milestones-grid">
+          <div>
+            <h2 id="milestones-title">
+              Every day.<br /><em>A little more.</em>
+            </h2>
+            <p class="milestones-intro">
+              Some dates stay with you.<br />Some people do, too.
+            </p>
+            <div class="day-counter">
+              <span data-days-together>—</span>
+              <div>
+                days since our first hello<br /><time datetime="2024-11-24"
+                  >24 November 2024</time
+                >
+              </div>
+            </div>
+          </div>
+          <div class="dates-list">
+            <div class="date-row">
+              <span class="date-number">24<span>NOV</span></span>
+              <div>
+                <h3>The day we met</h3>
+                <p>The beginning of everything. 2024.</p>
+              </div>
+              <span aria-hidden="true">↗</span>
+            </div>
+            <div class="date-row">
+              <span class="date-number">09<span>MAR</span></span>
+              <div>
+                <h3>The day we became us</h3>
+                <p>Officially you and me. 2025.</p>
+              </div>
+              <span aria-hidden="true">♡</span>
+            </div>
+            <a class="next-date" href="calendar.html"
+              ><span class="small-label">The next date to keep close</span
+              ><span class="next-date-title" data-next-title
+                >Our next special day</span
+              ><span class="next-date-bottom"
+                ><span data-next-date>View our calendar</span
+                ><span data-next-days>↗</span></span
+              ></a
+            >
+          </div>
+        </div>
+      </section>
 
-    
-    <div class="heart-burst" id="heartBurst"></div>
-
-   
-    
-    <div class="floating-heart" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="floating-heart" style="left: 40%; animation-delay: 3s;"></div>
-    <div class="floating-heart" style="left: 70%; animation-delay: 6s;"></div>
-    <div class="floating-heart" style="left: 90%; animation-delay: 9s;"></div>
-    <div class="floating-heart" style="left: 20%; animation-delay: 12s;"></div>
-
-   
-    <div class="balloon" style="left: 15%; animation-delay: 0s;"></div>
-    <div class="balloon" style="left: 45%; animation-delay: 5s;"></div>
-    <div class="balloon" style="left: 75%; animation-delay: 10s;"></div>
-
-    
-    <div class="sparkle" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
-    <div class="sparkle" style="top: 30%; left: 70%; animation-delay: 1s;"></div>
-    <div class="sparkle" style="top: 50%; left: 30%; animation-delay: 2s;"></div>
-    <div class="sparkle" style="top: 70%; left: 60%; animation-delay: 3s;"></div>
-    <div class="sparkle" style="top: 90%; left: 40%; animation-delay: 2.5s;"></div>
-    <div class="sparkle" style="top: 20%; left: 80%; animation-delay: 1.5s;"></div>
-
-    
-    <div class="star" style="top: 15%; left: 25%; animation-delay: 0s;"></div>
-    <div class="star" style="top: 35%; left: 75%; animation-delay: 2s;"></div>
-    <div class="star" style="top: 55%; left: 15%; animation-delay: 4s;"></div>
-    <div class="star" style="top: 75%; left: 65%; animation-delay: 1s;"></div>
-
-    
-    <div class="butterfly" style="top: 30%; animation-delay: 0s;"></div>
-    <div class="butterfly" style="top: 60%; animation-delay: 7s;"></div>
-
-    
-    <div class="bubble" style="left: 20%; animation-delay: 0s;"></div>
-    <div class="bubble" style="left: 50%; animation-delay: 3s;"></div>
-    <div class="bubble" style="left: 80%; animation-delay: 6s;"></div>
-    <div class="bubble" style="left: 35%; animation-delay: 9s;"></div>
-
-    
-    <div class="petal" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="petal" style="left: 30%; animation-delay: 3s;"></div>
-    <div class="petal" style="left: 50%; animation-delay: 6s;"></div>
-    <div class="petal" style="left: 70%; animation-delay: 9s;"></div>
-    <div class="petal" style="left: 90%; animation-delay: 12s;"></div>
-
-    
-    <div class="glow" style="top: 30%; left: 30%; animation-delay: 0s;"></div>
-    <div class="glow" style="top: 60%; left: 70%; animation-delay: 3s;"></div>
-
-    
-    <div class="shooting-star" style="top: 0; left: 20%; animation-delay: 0s;"></div>
-    <div class="shooting-star" style="top: 20%; left: 70%; animation-delay: 5s;"></div>
-    <div class="shooting-star" style="top: 10%; left: 40%; animation-delay: 10s;"></div>
-
-    
-    <div class="wave"></div>
-
-   
-    <div class="ribbon" style="top: 40%; animation-delay: 0s;"></div>
-    <div class="ribbon" style="top: 70%; animation-delay: 4s;"></div>
-
-    
-    <div class="snowflake" style="left: 15%; animation-delay: 0s;"></div>
-    <div class="snowflake" style="left: 45%; animation-delay: 5s;"></div>
-    <div class="snowflake" style="left: 75%; animation-delay: 10s;"></div>
-
-    
-    <div class="smoke" style="left: 30%; animation-delay: 0s;"></div>
-    <div class="smoke" style="left: 60%; animation-delay: 3s;"></div>
-
-    
-    <div class="ripple" style="top: 40%; left: 30%; animation-delay: 0s;"></div>
-    <div class="ripple" style="top: 60%; left: 70%; animation-delay: 2s;"></div>
-
-    
-    <div class="dice" style="left: 20%; animation-delay: 0s;"></div>
-    <div class="dice" style="left: 80%; animation-delay: 5s;"></div>
-
-    
-    <div class="firework" id="firework1"></div>
-    <div class="firework" id="firework2"></div>
-    <div class="firework" id="firework3"></div>
-
-    
-    <div class="dust" id="dust1"></div>
-    <div class="dust" id="dust2"></div>
-    <div class="dust" id="dust3"></div>
-
-    
-    <div class="cake" style="left: 25%; animation-delay: 0s;"></div>
-    <div class="cake" style="left: 75%; animation-delay: 7s;"></div>
-
-    
-    <div class="moon" style="animation-delay: 0s;"></div>
-
-    
-    <div class="rainbow" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
-    <div class="rainbow" style="top: 70%; left: 50%; animation-delay: 5s;"></div>
-
-    
-    <div class="spinning-heart" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
-    <div class="spinning-heart" style="top: 70%; left: 80%; animation-delay: 4s;"></div>
-
-    <    <script src="premium.js"></script>
-    <script src="enhanced.js"></script>
-    <script src="scripts.js"></script>t>
-    <script src="theme-fix-v2.js"></script>
-    <link rel="stylesheet" href="carnival-features.css">
-    <script src="carnival-features.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const slides = document.querySelectorAll('.slide');
-            const loveButton = document.getElementById('loveButton');
-            const responseContainer = document.getElementById('responseContainer');
-            const yesButton = document.getElementById('yesButton');
-            const noButton = document.getElementById('noButton');
-            const heartBurst = document.getElementById('heartBurst');
-            const fireworks = document.querySelectorAll('.firework');
-            const dusts = document.querySelectorAll('.dust');
-            const bgMusic = document.getElementById('bgMusic');
-            const audioToggle = document.getElementById('audioToggle');
-            const volumeSlider = document.getElementById('volumeSlider');
-            
-            let currentSlide = 0;
-            let autoSlideTimer;
-            let isMuted = false;
-
-            
-            function showSlide(index) {
-                slides.forEach(slide => {
-                    slide.classList.remove('active');
-                });
-                slides[index].classList.add('active');
-            }
-
-           
-            function startAutoSlide() {
-                showSlide(currentSlide);
-                
-                autoSlideTimer = setInterval(() => {
-                    currentSlide++;
-                    
-                    if (currentSlide < slides.length) {
-                        showSlide(currentSlide);
-                        
-                        
-                        if (currentSlide === slides.length - 1) {
-                            
-                            setTimeout(() => {
-                                
-                                slides[currentSlide].classList.remove('active');
-                                
-                                
-                                setTimeout(() => {
-                                    loveButton.classList.add('active');
-                                    
-                                    
-                                    triggerFireworks();
-                                    triggerDust();
-                                }, 1000);
-                            }, 3000);
-                            
-                            
-                            clearInterval(autoSlideTimer);
-                        }
-                    }
-                }, 3000);
-            }
-
-           
-            function triggerFireworks() {
-                fireworks.forEach((firework, index) => {
-                    firework.style.left = `${20 + (index * 30)}%`;
-                    setTimeout(() => {
-                        firework.classList.add('ready');
-                    }, index * 500);
-                });
-            }
-
-            
-            function triggerDust() {
-                dusts.forEach((dust, index) => {
-                    dust.style.left = `${30 + (index * 20)}%`;
-                    dust.style.top = `${40 + (index * 10)}%`;
-                    setTimeout(() => {
-                        dust.classList.add('active');
-                    }, index * 700 + 1000);
-                });
-            }
-
-            
-            function createHeartBurst() {
-                heartBurst.innerHTML = '';
-                heartBurst.classList.add('active');
-                
-                for (let i = 0; i < 50; i++) {
-                    const heart = document.createElement('div');
-                    heart.classList.add('heart-particle');
-                    
-                    
-                    const size = Math.random() * 20 + 10;
-                    heart.style.width = `${size}px`;
-                    heart.style.height = `${size}px`;
-                    
-                    
-                    heart.style.top = '50%';
-                    heart.style.left = '50%';
-                    
-                    
-                    const colors = ['#FF4778', '#FF95A8', '#FFB6C1', '#FFD1DC'];
-                    heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    
-                    
-                    const angle = Math.random() * 360;
-                    const distance = Math.random() * 1000 + 200;
-                    const duration = Math.random() * 3 + 2;
-                    
-                    heart.style.borderRadius = '50%';
-                    heart.style.position = 'absolute';
-                    heart.style.transform = 'translate(-50%, -50%)';
-                    heart.style.animation = `heartBurst ${duration}s forwards`;
-                    heart.style.animationTimingFunction = 'ease-out';
-                    
-                    
-                    const endX = Math.cos(angle * Math.PI / 180) * distance;
-                    const endY = Math.sin(angle * Math.PI / 180) * distance;
-                    
-                    heart.style.setProperty('--end-x', `${endX}px`);
-                    heart.style.setProperty('--end-y', `${endY}px`);
-                    
-                    heartBurst.appendChild(heart);
-                }
-                
-                
-                const style = document.createElement('style');
-                style.textContent = `
-                    .heart-particle {
-                        opacity: 0;
-                    }
-                    @keyframes heartBurst {
-                        0% { 
-                            transform: translate(-50%, -50%) scale(0); 
-                            opacity: 1;
-                        }
-                        50% { 
-                            opacity: 1; 
-                        }
-                        100% { 
-                            transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y))) scale(1); 
-                            opacity: 0;
-                        }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-
-            
-            loveButton.addEventListener('click', function() {
-                responseContainer.classList.add('active');
-            });
-
-            
-            yesButton.addEventListener('click', function() {
-                
-                window.location.href = 'index1.html';
-            });
-
-            
-            noButton.addEventListener('mouseenter', function() {
-                
-                const randomX = Math.random() * (window.innerWidth - 150);
-                const randomY = Math.random() * (window.innerHeight - 50);
-                
-                this.style.position = 'absolute';
-                this.style.left = `${randomX}px`;
-                this.style.top = `${randomY}px`;
-            });
-
-            
-            audioToggle.addEventListener('click', function() {
-                if (isMuted) {
-                    bgMusic.volume = volumeSlider.value;
-                    audioToggle.textContent = '♪';
-                    isMuted = false;
-                } else {
-                    bgMusic.volume = 0;
-                    audioToggle.textContent = '♪̸';
-                    isMuted = true;
-                }
-            });
-            
-            volumeSlider.addEventListener('input', function() {
-                if (!isMuted) {
-                    bgMusic.volume = this.value;
-                }
-            });
-            
-            
-            bgMusic.volume = volumeSlider.value;
-            
-            
-            function tryPlayMusic() {
-                bgMusic.play().catch(function(error) {
-                    console.log("การเล่นอัตโนมัติอาจถูกบล็อก: ", error);
-                    
-                    
-                    let notification = document.createElement('div');
-                    notification.innerHTML = '🔊 คลิกเพื่อเล่นเพลง';
-                    notification.style.position = 'fixed';
-                    notification.style.bottom = '20px';
-                    notification.style.left = '50%';
-                    notification.style.transform = 'translateX(-50%)';
-                    notification.style.backgroundColor = 'rgba(255, 71, 120, 0.8)';
-                    notification.style.color = 'white';
-                    notification.style.padding = '10px 20px';
-                    notification.style.borderRadius = '30px';
-                    notification.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.2)';
-                    notification.style.zIndex = '1000';
-                    notification.style.cursor = 'pointer';
-                    notification.style.fontFamily = "'Prompt', sans-serif";
-                    notification.style.fontSize = '14px';
-                    
-                    notification.onclick = function() {
-                        bgMusic.play();
-                        this.remove();
-                    };
-                    
-                    document.body.appendChild(notification);
-                    
-                    
-                    setTimeout(() => {
-                        if (document.body.contains(notification)) {
-                            notification.remove();
-                        }
-                    }, 15000);
-                });
-            }
-            
-            
-            tryPlayMusic();
-            
-            
-            if (document.readyState === 'complete') {
-                tryPlayMusic();
-            } else {
-                window.addEventListener('load', tryPlayMusic);
-            }
-            
-            
-            document.body.addEventListener('click', function() {
-                tryPlayMusic();
-            }, { once: true });
-            
-            
-            document.body.addEventListener('keydown', function() {
-                tryPlayMusic();
-            }, { once: true });
-            
-           
-            startAutoSlide();
-            
-        });
-        
-    </script>
-    
-</body>
+      <section class="closing" aria-labelledby="closing-title">
+        <span class="small-label">This is just the beginning</span>
+        <h2 id="closing-title">Here's to<br /><em>everything ahead.</em></h2>
+        <a class="round-link" href="slides.html"
+          >Let's make more memories <span aria-hidden="true">↗</span></a
+        >
+        <p>With you, every chapter is my favourite.</p>
+        <div class="closing-mark" aria-hidden="true">T <em>&</em> V</div>
+      </section>
+    </main>
+    <footer class="footer">
+      <a href="index.html">Tee & Veeva</a
+      ><span>A little corner of the internet. A whole lot of love.</span
+      ><a href="#cover-title">Back to the beginning ↑</a>
+    </footer>
+    <audio id="our-song" src="music/RakTae.mp3" preload="none" loop></audio>
+    <dialog
+      class="photo-dialog"
+      id="photo-dialog"
+      aria-label="Photograph viewer"
+    >
+      <button
+        class="dialog-close"
+        data-close-dialog
+        aria-label="Close photograph"
+      >
+        Close <span aria-hidden="true">×</span>
+      </button>
+      <figure>
+        <img src="assets/photos/cover.webp" alt="" />
+        <figcaption></figcaption>
+      </figure>
+      <div class="dialog-navigation">
+        <button type="button" data-photo-prev aria-label="Previous photograph">
+          ← Previous</button
+        ><span data-photo-position></span
+        ><button type="button" data-photo-next aria-label="Next photograph">
+          Next →
+        </button>
+      </div>
+    </dialog>
+    <dialog class="note-dialog" id="note-dialog" aria-labelledby="note-title">
+      <button class="dialog-close" data-close-dialog aria-label="Close letter">
+        Close ×</button
+      ><span class="small-label">A little reminder</span>
+      <h2 id="note-title">You are my<br /><em>favourite person.</em></h2>
+      <p>
+        Thank you for being in this world, and for letting me be a part of
+        yours. I will keep choosing you, in all the small ways, every day.
+      </p>
+      <span class="signature">Love, Tee</span>
+    </dialog>
+    <div class="reading-progress" aria-hidden="true"></div>
+  </body>
 </html>
