@@ -1410,7 +1410,7 @@ html.motion-ready [data-reveal].is-visible {
     object-position: 43% 65%;
   }
   .cover-shade {
-    background: linear-gradient(180deg, #183a4640, transparent 45%, #132d28c9);
+    background: linear-gradient(180deg, #183a4699, #183a461a 45%, #132d28c9);
   }
   .cover-bottom {
     gap: 20px;
